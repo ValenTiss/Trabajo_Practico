@@ -1,7 +1,7 @@
 import sys
 
 def Usuario(entrada,x = 1):
-	if  (65 >=entrada[x]<= 90 or 97 >=entrada[x]<= 122 ):
+	if  (65 <=entrada[x]<= 90 or 97 <=entrada[x]<= 122 ):
 		x +=1
 		Usuario(entrada)
 
