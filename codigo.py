@@ -5,7 +5,7 @@ def Usuario(entrada,x = 1):
 		x +=1
 		Usuario(entrada)
 
-	elif (48 >=entrada[x]<= 57):
+	elif (48 <=entrada[x]<= 57):
 		x +=1
 		Exp_Num(entrada,x)
 
