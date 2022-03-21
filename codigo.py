@@ -18,7 +18,7 @@ def Usuario(entrada,x = 1):
 def Exp_Num(entrada,x):
 	entrada_largo =len(entrada)
 
-	if (48 >=entrada[x]<= 57):
+	if (48 <=entrada[x]<= 57):
 		Exp_Num(entrada)
 
 	if entrada_largo == x:
