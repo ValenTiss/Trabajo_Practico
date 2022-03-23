@@ -107,8 +107,17 @@ def Solicitar_cuenta():
 	password = input("Digite la contraseña: ")
 	Acceso_cuenta(usuario,password)
 
+def Inicio():
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
+  if ord(banquero_o_usuario) == 49:
+    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
+    if clave_banquero == "SAUL":
+      #Consola_banquero()
+    else:
+      print("Intento sospechoso de entrar al sistema, se ha notificado a las entidades correspondientes.")
+  elif ord(banquero_o_usuario) == 50:
+    Solicitar_cuenta()
 
-Solicitar_cuenta()
 
 def Menu():
 	print("Bienvenido.")
