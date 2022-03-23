@@ -35,7 +35,7 @@ def Exp_Num(Num,x,n):
 					
 				Exp_Num(Num,x,n)
 				if (n == 2):
-					Menu()
+					Exs_Cuenta(Num,0)
 
 				if (n>2):
 					print("Usuario no valido.")
@@ -50,8 +50,17 @@ def Exp_Num(Num,x,n):
 		Usuario(input("\nIngrese su nombre de usuario:"),0)
 
 
-def Menu():
-	print("Bienvenido.")
+def Exs_Cuenta(Usuario,n):
+	cuentas ={"valen1234$": "4321"}
+	if(ord(cuentas[Usuario][n] ) == ord(Usuario[n])):
+		n +=1
+		Exs_Cuenta(Usuario,n)
+
+	else:
+		print("Usuario inexistente.")
+		Usuario(input("\nIngrese su nombre de usuario:"),0)
+
+	
 
 	
 Usuario(input("Ingrese su usuario: "), 0 )
