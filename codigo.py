@@ -55,10 +55,10 @@ def Exp_Num(Num,x,n):
 cuentas = {"$VALEN":1234,"!JUANI":5432} #Debe ser una variable global
 
 
-def Es_pin(entrada_usuario, contador): #Sirve para verificar si la hilera son 4 números
+def Es_pin(entrada_usuario, contador): 
   if len(entrada_usuario) == 4: 
-    if contador < 5:
-      if 48 <= ord(entrada_usuario[contador-1]) and ord(entrada_usuario[contador-1]) <= 57 :
+    if contador < 4:
+      if 48 <= ord(entrada_usuario[contador]) and ord(entrada_usuario[contador]) <= 57 :
         contador+=1
         return True and Es_pin(entrada_usuario, contador)
       else:
@@ -99,13 +99,22 @@ def Acceso_cuenta(usuario,password): #Permite el acceso de la cuenta al menú de
 			Solicitar_cuenta()
   
 
-def Solicitar_cuenta():
+def Solicitar_cuenta(): #Pide el nombre de usuario y contraseña al cliente
 	usuario = input("Digite su nombre de usuario: ")
 	password = input("Digite la contraseña: ")
 	Acceso_cuenta(usuario,password)
 
+def Inicio():  #Inicio del programa, verifica si se desea ingresar al sistema como banquero o como cliente
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
+  if ord(banquero_o_usuario) == 49:
+    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
+    if clave_banquero == "SAUL":
+      #Consola_banquero()
+    else:
+      print("Intento sospechoso de entrar al sistema, se ha notificado a las entidades correspondientes.")
+  elif ord(banquero_o_usuario) == 50:
+    Solicitar_cuenta()
 
-Solicitar_cuenta()
 
 
 def Exs_Cuenta(Usuario,n):
