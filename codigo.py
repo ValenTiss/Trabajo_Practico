@@ -39,19 +39,13 @@ def Exp_Num(Num,x,n):
 			#Se le suma 1 a la variable n para que la funcion siga su recursividad.
 			if (48 <= (ord(Num[x])) <= 57):
 				x +=1
-<<<<<<< Updated upstream
 				n +=1
-=======
-				n +=1		
->>>>>>> Stashed changes
+
 				Exp_Num(Num,x,n)
 				#El usuario fue aceptado pasa a la funcion Es_pin 
 				if (n == 2):
-<<<<<<< Updated upstream
 					Acceso_cuenta(Num,input("Ingrese su contraseña: "))
-=======
 					Es_pin(Num,0)
->>>>>>> Stashed changes
 
 				#El usuario es rebotado vuelve a la funcion Usuario
 				if (n>2):
@@ -70,11 +64,8 @@ def Exp_Num(Num,x,n):
 		
 		
 		
-<<<<<<< Updated upstream
+
 cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global
-=======
-cuentas = {"valen1234$":1234,"Fede1234#":5432} #Debe ser una variable global
->>>>>>> Stashed changes
 
 
 def Es_pin(entrada_usuario, contador): 
@@ -127,7 +118,7 @@ def Acceso_cuenta(usuario,password): #Permite el acceso de la cuenta al menú de
 
 def Solicitar_cuenta(): #Pide el nombre de usuario y contraseña al cliente
 	usuario = input("Digite su nombre de usuario: ")
-<<<<<<< Updated upstream
+
 	Usuario(usuario,0)
 
 def Inicio():  #Inicio del programa, verifica si se desea ingresar al sistema como banquero o como cliente
@@ -144,10 +135,9 @@ def Inicio():  #Inicio del programa, verifica si se desea ingresar al sistema co
     Solicitar_cuenta()
 
 
-Solicitar_cuenta()
-=======
-	password = input("Digite la contraseña: ")
-	Acceso_cuenta(usuario,password)
+def Solicitar_cuenta():
+	nmb_usr = input("Digite la cuenta: ")
+	Usuario(nmb_usr,0)
 
 
 Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
@@ -160,22 +150,19 @@ def Menu(decision,usuario_adm):
 		cajero_loc = input("Ingrese la localización de su cajero: ")
 
 	if int(decision) == 0:
+		a=0
 		#Historial(usuario_adm,0)
 
 
-"""def Historial(cuenta_his,n):
-	cuenta_Xusr = Cuentas_usr[cuenta_his]
-	 cuenta_Xusr =Hist_100
 
-	if (n <= 4):
-		print(Hist_str(cuenta_Xusr)[n+1])
-		Historial(cuenta_his,n)"""
-
-
+#def Historial(cuenta_his,n):
+#	cuenta_Xusr = Cuentas_usr[cuenta_his]
+#	cuenta_Xusr =Hist_100
+#
+#	if (n <= 4):
+#		print(Hist_str(cuenta_Xusr)[n+1])
+#		Historial(cuenta_his,n)
 
 
 
 Solicitar_cuenta()
-
-
->>>>>>> Stashed changes
