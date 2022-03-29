@@ -164,5 +164,91 @@ def Menu(decision,usuario_adm):
 #		Historial(cuenta_his,n)
 
 
+def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  #Verifica que el nombre para un usuario cumpla con la expresión regular
+  terminar = contador== len(posible_usuario)
+  if not terminar:  
+    if exp_regular == 0:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      elif 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 1:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+          return False
+    elif exp_regular == 2:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 3:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 4:
+      if ord(posible_usuario[contador])== 33 or ord(posible_usuario[contador])== 35 or ord(posible_usuario[contador])== 36 or ord(posible_usuario[contador])== 38 or ord(posible_usuario[contador])== 63:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    else:
+      return False
+  elif len(posible_usuario) > 0 and exp_regular == 5:
+    return True
+  else:
+    return False
+
+def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  #Verifica que el nombre para un cajero cumpla con la expresión regular
+  terminar = contador== len(posible_usuario)
+  if not terminar:  
+    if exp_regular == 0:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 1:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+          return False
+    elif exp_regular == 2:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular >= 3:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    else:
+      return False
+  elif len(posible_usuario) > 0 and exp_regular >= 4:
+    return True
+  else:
+    return False
 
 Solicitar_cuenta()
+
