@@ -294,7 +294,7 @@ def retirar_dinero_del_cajero(monto, dinero_en_cajero):
   monto -= billete_1*1
   if monto==0:
     #------ actualizar la cantidad de billetes en el cajero  y dinero disponible del usuario
-    print(monto)
+    print(monto)#-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------borrar esta y siguiente
     print(str(billete_1)+","+str(billete_2)+","+str(billete_5)+","+str(billete_10)+","+str(billete_20)+","+str(billete_50)+","+str(billete_100)) #cantidad de billetes de cada denominación que se están retirando 
     return print("Transacción realizada con éxito, reciba su dinero")
   else:
