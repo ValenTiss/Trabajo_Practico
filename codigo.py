@@ -64,23 +64,39 @@ def Exp_Num(Num,x,n):
 		
 		
 		
-
+#Usuarios disponibles con sus respectivas claves 
 cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global
 
-
+#La función Es_pin verifica si un string contiene únicamente un número de 4 dígitos
 def Es_pin(entrada_usuario, contador): 
+
+  #Si la hilera tiene 4 dígitos
   if len(entrada_usuario) == 4: 
+		
+    #Si el contador no ha registrado los 4 caracteres 	
     if contador < 4:
-      if 48 <= ord(entrada_usuario[contador]) and ord(entrada_usuario[contador]) <= 57 :
+
+      #Si cada caracter es un número según la tabla ASCII
+      if 48 <= ord(entrada_usuario[contador])  <= 57 :
         contador+=1
-        return True and Es_pin(entrada_usuario, contador)
+	
+	#se realiza el llamado recursivo
+        return Es_pin(entrada_usuario, contador)
+      #El caracter no es un número
       else:
         return False
+
+    #Se verificó que los 4 caracteres son números
     else:
       return True
+
+  #La hilera no tiene 4 dígitos
   return False
 
-def Verifica_password(password_guardado, password_verificando, contador): #Verifica que la contraseña ingresada coincida con la contraseña del usuario
+#Verifica que la contraseña ingresada coincida con la contraseña del usuario
+def Verifica_password(password_guardado, password_verificando, contador): 
+  
+  #si el password_verificando es un número de 4 dígitos
   if Es_pin(password_verificando,0):
     tamano = len(password_verificando)-1
     digito_actual = password_guardado%10 + 48
