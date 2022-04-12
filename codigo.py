@@ -122,46 +122,91 @@ def Verifica_password(password_guardado, password_verificando, contador):
   #Los caracteres ingresados no representan un número de 4 dígitos
   return False
 
-
-def Acceso_cuenta(usuario,password): #Permite el acceso de la cuenta al menú de opciones
+#Permite el acceso de la cuenta al menú de opciones
+def Acceso_cuenta(usuario,password): 
+	
+	#Si el nombre de usuario coincide con algún nombre creado anteriormente
 	if usuario in cuentas:
+		
+		#Si la clave es correcta para el usuario seleccionado
 		if(Verifica_password(cuentas[usuario],password,0) ):
 				print("Datos ingresados correctamente. \n Menú de opciones: \n")
+				
+				#Se desplegan las opciones del menú para el usuario
 				Menu(input("Ingrese si quiere realizar un retiro(1) o ver su historial(0): "),usuario)
+				
+		#La clave no coincide con la clave del usuario		
 		else:
-			terminar= input("Presione 1 para volver a introducir su contraseña o cualquier otra tecla para terminar \n")	 		
+			#Permite al usuario elegir si desea volver a probar con otra clave o terminar terminar el programa
+			terminar= input("Presione 1 para volver a introducir su contraseña o cualquier otra tecla para terminar \n")
+			
+			#Si el usuario selecciona 1
 			if ord(terminar) == 49:
+				
+				#Se vuelve a desplegar la opción de volver a introducir la clave
 				Acceso_cuenta(usuario , input("Contraseña incorrecta \n Ingrese su contraseña nuevamente: "))
+	
+	#El nombre de usuario introducido no existe
 	else:
+		#Se pregunta al que corre el programa si desea volver a introducir sus datos o si desea terminar el programa
 		opcion = input("Usuario no valido. \n Presione 1 para volver a introducir sus datos o cualquier otra tecla para terminar \n" )
+		
+		#Si elige 1
 		if ord(opcion) == 49:
+			
+			#Se vuelve a pedir el nombre de usuario y clave
 			Solicitar_cuenta()
   
-
-def Solicitar_cuenta(): #Pide el nombre de usuario y contraseña al cliente
+#Pide el nombre de usuario y contraseña al cliente
+def Solicitar_cuenta(): 
+	
+	#Variable que guarda el nombre de usuario introducido por el usuario para acceder a su cuenta
 	usuario = input("Digite su nombre de usuario: ")
-
+	
+	#Verifica que el nombre de usuario cumpla la expresión regular y sea un usuario existente
 	Usuario(usuario,0)
 
-def Inicio():  #Inicio del programa, verifica si se desea ingresar al sistema como banquero o como cliente
-  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
-  if ord(banquero_o_usuario) == 49:
-    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
-    if clave_banquero == "SAUL":
-    	a=0
-      #Consola_banquero()	
-    else:
-      print("Intento sospechoso de entrar al sistema, se ha notificado a las entidades correspondientes.")
+#Inicio del programa, verifica si se desea ingresar al sistema como banquero o como cliente
+def Inicio():  
 
+  #Guarda la opción para saber si el usuario desea ingresar como banquero o como usuario
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
+
+  #Si el usuario ingresa el número 1 por lo que desea ingresar como banquero
+  if ord(banquero_o_usuario) == 49:
+
+    #Se solicita la clave del banquero y se guarda en la variable clave_banquero
+    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
+	
+    #Si la clave del banquero es correcta
+    if clave_banquero == "SAUL":
+    	a=0 #esto se borra, solo era para que el programa corriera pero si consola banquero ya existe no se necesita esto
+	
+      #Despliega las opciones del banquero	
+      #Consola_banquero()	
+	
+    #La clave del banquero se introdujo de manera incorrecta	
+    else:
+		
+      #Se notifica el error		
+      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
+
+  #Si el usuario ingresa el número 1 por lo que desea ingresar como cliente del banco 
   elif ord(banquero_o_usuario) == 50:
+    
+    #Se le solicitan los datos al usuario 		
     Solicitar_cuenta()
 
-
+#Función que se encarga de pedir el nombre de usuario y llamar a la función Usuario(nmb_usr,0) para verificar su existencia
 def Solicitar_cuenta():
+	
+	#Variable que guarda el nombre de usuario recién digitado
 	nmb_usr = input("Digite la cuenta: ")
+	
+	#Se invoca a la función Usuario(nmb_usr,0) que verifica que el nombre de usuario ingresado cumpla con la expresión regular y esté registrado
 	Usuario(nmb_usr,0)
 
-
+#Diccionario que asocia los nombres de usuario con las claves
 Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
 Hist_100 ={1:"10001010",2:"00001010"}
 
@@ -185,8 +230,8 @@ def Menu(decision,usuario_adm):
 #		print(Hist_str(cuenta_Xusr)[n+1])
 #		Historial(cuenta_his,n)
 
-
-def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  #Verifica que el nombre para un usuario cumpla con la expresión regular
+#Verifica que el nombre para un usuario cumpla con la expresión regular
+def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  
   terminar = contador== len(posible_usuario)
   if not terminar:  
     if exp_regular == 0:
@@ -234,7 +279,8 @@ def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  #Verifica que
   else:
     return False
 
-def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  #Verifica que el nombre para un cajero cumpla con la expresión regular
+#Verifica que el nombre para un cajero cumpla con la expresión regular 
+def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  
   terminar = contador== len(posible_usuario)
   if not terminar:  
     if exp_regular == 0:
