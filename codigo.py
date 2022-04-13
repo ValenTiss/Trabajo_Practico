@@ -60,10 +60,7 @@ def Exp_Num(Num,x,n):
 	else:
 		print("Usuario no valido.")
 		Usuario(input("\nIngrese su nombre de usuario:"),0)
-		
-		
-		
-		
+				
 #Usuarios disponibles con sus respectivas claves 
 cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global
 
@@ -210,8 +207,6 @@ def Solicitar_cuenta():
 Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
 Hist_100 ={1:"10001010",2:"00001010"}
 
-
-
 def Menu(decision,usuario_adm):
 	if int(decision) == 1:
 		cajero_loc = input("Ingrese la localización de su cajero: ")
@@ -219,16 +214,6 @@ def Menu(decision,usuario_adm):
 	if int(decision) == 0:
 		a=0
 		#Historial(usuario_adm,0)
-
-
-
-#def Historial(cuenta_his,n):
-#	cuenta_Xusr = Cuentas_usr[cuenta_his]
-#	cuenta_Xusr =Hist_100
-#
-#	if (n <= 4):
-#		print(Hist_str(cuenta_Xusr)[n+1])
-#		Historial(cuenta_his,n)
 
 #Verifica que el nombre para un usuario cumpla con la expresión regular
 def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  
