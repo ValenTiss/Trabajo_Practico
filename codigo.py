@@ -4,16 +4,20 @@ Profesor:Saul Calderon Ramirez
 Fecha de entrega: 19 / 04 /22
 """
 import sys
+import time
 
-
-diccionario_historial={"valen1234$":100 , "Fede1234#":200}
-diccionario_clave={"usuario":"1234"}
-diccionario_saldo={"usuario":"231412"}
+diccionario_historial={"valen1234$":"Esta cuenta es predeterminada \n" , "Fede1234#":"Esta cuenta es predeterminada \n"}
+diccionario_clave={"valen1234$":"1234", "Fede5432#":"5432"}
+diccionario_saldo={"valen1234$":"1412","Fede1234#":"315"}
 diccionario_cajero={"ABC12345":"1,2,5,10,20,50,100"}
 
 #Diccionario que asocia los nombres de usuario con las claves
-Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
-Hist_100 ={1:"10001010",2:"00001010"}
+Cuentas_usr = {"valen1234$":100,"Fede1234#":200} #???
+Hist_100 ={1:"10001010",2:"00001010"} #???
+
+#Usuarios disponibles con sus respectivas claves 
+cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global ??? podemos quitar diccionario clave, hay que tomar en cuenta que este diccionario no está con strings
+
 
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
 def Usuario(entrada,x):
@@ -71,8 +75,6 @@ def Exp_Num(Num,x,n):
 		print("Usuario no valido.")
 		Usuario(input("\nIngrese su nombre de usuario:"),0)
 				
-#Usuarios disponibles con sus respectivas claves 
-cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global
 
 #La función Es_pin verifica si un string contiene únicamente un número de 4 dígitos
 def Es_pin(entrada_usuario, contador): 
