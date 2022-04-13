@@ -5,6 +5,16 @@ Fecha de entrega: 19 / 04 /22
 """
 import sys
 
+
+diccionario_historial={"valen1234$":100 , "Fede1234#":200}
+diccionario_clave={"usuario":"1234"}
+diccionario_saldo={"usuario":"231412"}
+diccionario_cajero={"ABC12345":"1,2,5,10,20,50,100"}
+
+#Diccionario que asocia los nombres de usuario con las claves
+Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
+Hist_100 ={1:"10001010",2:"00001010"}
+
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
 def Usuario(entrada,x):
 	entrada_len = len(entrada)
@@ -203,9 +213,7 @@ def Solicitar_cuenta():
 	#Se invoca a la función Usuario(nmb_usr,0) que verifica que el nombre de usuario ingresado cumpla con la expresión regular y esté registrado
 	Usuario(nmb_usr,0)
 
-#Diccionario que asocia los nombres de usuario con las claves
-Cuentas_usr = {"valen1234$":100,"Fede1234#":200}
-Hist_100 ={1:"10001010",2:"00001010"}
+
 
 def Menu(decision,usuario_adm):
 	if int(decision) == 1:
