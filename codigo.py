@@ -43,7 +43,7 @@ def Usuario(entrada,x):
 def Exp_Num(Num,x,n):
 	entrada_largo =len(Num)
 	#Se crea una variable para hacer la funcion recursiva por 3 veces maximo.
-	if(38>=ord(Num[entrada_largo-1])>=33 or ord(Num[entrada_largo-1]) == 63):
+	if(38 >= ord(Num[entrada_largo-1]) >= 35 or ord(Num[entrada_largo-1]) == 63 or ord(Num[entrada_largo-1]) == 33 ):
 		#La variable 3 se ejecuta dos veces verificando que sean numeros.
 		if (n<2):
 			#Se le suma 1 a la variable n para que la funcion siga su recursividad.
@@ -467,8 +467,44 @@ def devolver_billete_1(monto, dinero_en_cajero):
       return billetes_1_cajero
   else:
     return 0
+#Funcion destinada a verificar que la expresion regular del nombre del cajero cumpla la expresion regular(aplica solamente para la creacion).
+def Nmb_Cajero(Cajero,contador):
+  #Se obtiene el largo del nombre para despues para la recursividad.
+  Cajero_len = len(Cajero)
+  #Se crea un condicional que verifique la minima cantidad de caracteres que contiene el nombre.
+  if((Cajero_len-1) >= 3):
+    #Condicional el cual se encarga de verificar que los primeros caracteres sean letras en mayuscula
+    if  (90>= ord(Cajero[0]) and ord(Cajero[1]) and ord(Cajero[2]) >= 65):
+      #Se le suma 3 al contador para verificar los numeros a posteriori
+      contador += 3
+      #Se llama la funcion encargada de verificar los numeros en el nombre
+      Num_Cajero(Cajero,Cajero_len,contador)
+    #El nombre de cajero ingresado por consola no cumple la expresion regular,por lo tanto se vuelve a pedir el nombre del cajero
+    else:
+      print("Nombre de usuario invalido")
+      Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
+  #El nombre de cajero ingresado por consola no cumple la expresion regular,por lo tanto se vuelve a pedir el nombre del cajero    
+  else:
+    print("Nombre de usuario invalido")
+    Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
 
-
+#Funcion encargada de verificar los numeros en el nombre del cajero
+def Num_Cajero(Cajero,NmbCajero,x):
+  #Condicional utilizado para la verificar los caracteres restantes     
+  if (NmbCajero != x):
+    #Condicional encargado de clasificar los caracteres del nombre del cajero
+    if (48 <= ord(Cajero[x])<= 57):
+      print(x)
+      x +=1
+      Num_Cajero(Cajero,NmbCajero,x)
+    #El nombre de cajero ingresado por consola no cumple la expresion regular,por lo tanto se vuelve a pedir el nombre del cajero 
+    else:
+      print("Nombre de usuario invalido")
+      Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
+  #Finalizacion de la recursividad del programa    
+  else:
+    #???:Agregar el nombre a la base de datos // Pasar a pedir cuanto dinero va a tener el cajero
+    print('Bienvenido')
 
 
 monto= 4
