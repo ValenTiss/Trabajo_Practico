@@ -248,7 +248,7 @@ def Es_numero(entrada_usuario, contador):
 	
 def volver_al_menu(usuario):
 	decision=input("Si desea hacer un nuevo retiro presione 0, realizar un depósito presione 1, revisar su saldo presione 2 o ver su historial de transacciones presione 3: ")
-	if decision!=0:
+	if decision!="0":
 		if 48 <=ord(decision) <= 51:
 			return Menu(decision,usuario)
 		else:
