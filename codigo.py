@@ -431,6 +431,7 @@ def devolver_billete_1(monto, dinero_en_cajero):
 
 
 
+
 monto= 4
 dinero_del_usuario= 3
 dinero_en_cajero= "1,1,1,1,1,1,1"
