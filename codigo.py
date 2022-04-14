@@ -197,8 +197,8 @@ def Inicio():
 	
     #Si la clave del banquero es correcta
     if clave_banquero == "SAUL":
-    	a=0 #esto se borra, solo era para que el programa corriera pero si consola banquero ya existe no se necesita esto
-	
+    	a=0 
+	   #???
       #Despliega las opciones del banquero	
       #Consola_banquero()	
 	
@@ -257,8 +257,6 @@ def volver_al_menu(usuario):
 	else:
 		a=0 #???
 		#terminar() ???
-
-
 
 #Esta función permite llevar a cabo las opciones del usuario, llamando a otras funciones dependiendo de lo seleccionado por el usuario con anterioridad
 def Menu(decision,usuario_adm):
@@ -342,98 +340,6 @@ def Menu(decision,usuario_adm):
 	else: 
 		a=0 #???
 		#terminar() ???
-		
-		
-		
-		
-		
-#Verifica que el nombre para un usuario cumpla con la expresión regular
-def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  
-  terminar = contador== len(posible_usuario)
-  if not terminar:  
-    if exp_regular == 0:
-      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      elif 48<=ord(posible_usuario[contador])<=57:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    elif exp_regular == 1:
-      if 48<=ord(posible_usuario[contador])<=57:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      else:
-          return False
-    elif exp_regular == 2:
-      if 48<=ord(posible_usuario[contador])<=57:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    elif exp_regular == 3:
-      if 48<=ord(posible_usuario[contador])<=57:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    elif exp_regular == 4:
-      if ord(posible_usuario[contador])== 33 or ord(posible_usuario[contador])== 35 or ord(posible_usuario[contador])== 36 or ord(posible_usuario[contador])== 38 or ord(posible_usuario[contador])== 63:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    else:
-      return False
-  elif len(posible_usuario) > 0 and exp_regular == 5:
-    return True
-  else:
-    return False
-
-#Verifica que el nombre para un cajero cumpla con la expresión regular 
-def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  
-  terminar = contador== len(posible_usuario)
-  if not terminar:  
-    if exp_regular == 0:
-      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    elif exp_regular == 1:
-      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
-      else:
-          return False
-    elif exp_regular == 2:
-      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    elif exp_regular >= 3:
-      if 48<=ord(posible_usuario[contador])<=57:
-        exp_regular+=1
-        contador+=1
-        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
-      else:
-        return False
-    else:
-      return False
-  elif len(posible_usuario) > 0 and exp_regular >= 4:
-    return True
-  else:
-    return False
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 """
@@ -624,9 +530,6 @@ def devolver_billete_1(monto, dinero_en_cajero):
   else:
     return 0
 
-
-
-
 def actualizar_cajero_metiendo(cajero, adicion):
   dinero_actual_cajero=diccionario_cajero[cajero].split(",")
   adicion= adicion.split(",")
@@ -681,6 +584,34 @@ def depositar_dinero(usuario, cajero):
 		#Se desea volver al menu del usuario
 		else:
 			return volver_al_menu(usuario)
+
+def Nmb_Cajero(Cajero,contador):
+  Cajero_len = len(Cajero)
+  if((Cajero_len-1) >= 3):
+    if  (90>= ord(Cajero[0]) and ord(Cajero[1]) and ord(Cajero[2]) >= 65):
+      contador += 3
+      Num_Cajero(Cajero,Cajero_len,contador)
+
+    else:
+      print("Nombre de usuario invalido")
+      Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
+
+  else:
+    print("Nombre de usuario invalido")
+    Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
+
+def Num_Cajero(Cajero,NmbCajero,x):	 		
+	if (NmbCajero != x):
+		if (48 <= ord(Cajero[x])<= 57):
+			x +=1
+			Num_Cajero(Cajero,NmbCajero,x)
+
+		else:
+			print("Nombre de usuario invalido")
+			Nmb_Cajero(input("Ingrese nuevamente otro nombre: "),0) 
+	else:
+		print('Creacion de cajero exitosa')
+
 
 
 Solicitar_cuenta()
