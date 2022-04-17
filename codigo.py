@@ -15,9 +15,6 @@ diccionario_cajero={"ABC12345":"1,2,5,10,20,50,100"}
 Cuentas_usr = {"valen1234$":100,"Fede1234#":200} #???
 Hist_100 ={1:"10001010",2:"00001010"} #???
 
-#Usuarios disponibles con sus respectivas claves 
-cuentas = {"valen1234$":1234,"Fede5432#":5432} #Debe ser una variable global ??? podemos quitar diccionario clave, hay que tomar en cuenta que este diccionario no está con strings
-
 
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
 def Usuario(entrada,x):
@@ -133,6 +130,7 @@ def Verifica_password(password_guardado, password_verificando, contador):
 
 #Permite el acceso de la cuenta al menú de opciones
 def Acceso_cuenta(usuario,password): 
+	cuentas = IngresoCuenta()
 	
 	#Si el nombre de usuario coincide con algún nombre creado anteriormente
 	if usuario in cuentas:
@@ -420,9 +418,6 @@ def actualizar_cajero_sacando(cajero, disminucion):
   diccionario_cajero[cajero]= dinero_actualizado_cajero
   return print("Se ha actualizado exitosamente la cantidad de dinero en el cajero, actualmente se posee: "+diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
 
-
-
-
 #calcula la cantidad de billetes de 100 que se deben y pueden devolver
 def devolver_billete_100(monto, dinero_en_cajero):
   """
@@ -542,7 +537,7 @@ def actualizar_cajero_metiendo(cajero, adicion):
   billete_100= str(int(dinero_actual_cajero[6])+int(adicion[6]))
   dinero_actualizado_cajero= billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
   diccionario_cajero[cajero]= dinero_actualizado_cajero
-  return print("Se ha actualizado exitosamente la cantidad de dinero en el cajero, actualmente se posee: "+diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
+  return print("Actualizacion exitosa, el cajero cuenta con "+ str(diccionario_cajero[cajero])) #??? se puede borrar o escribir mejor
 
 
 
@@ -563,12 +558,12 @@ def depositar_dinero(usuario, cajero):
 		actualizar_cajero_metiendo(cajero, deposito)
 		diccionario_saldo[usuario]= str(int(diccionario_saldo[usuario])+ convertir_string_a_dinero(deposito))
 		deposito_int= convertir_string_a_dinero(deposito)
-		print("Se agregaron exitosamente "+deposito_int+" pesos a su cuenta, ahora posee un total de "+ diccionario_saldo[usuario] + " pesos")
+		print("Se agregaron exitosamente "+str(deposito_int)+" pesos a su cuenta, ahora posee un total de "+ str(diccionario_saldo[usuario]) + " pesos")
 		tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split(" ")
 		fecha= tiempo[0]
 		hora= tiempo[1]
 		#Se actualiza el historial
-		diccionario_historial[usuario]+= "Se realizó un depósito de "+deposito_int+ " pesos el " + fecha + " a las " + hora + " en el cajero " + cajero + "\n"
+		diccionario_historial[usuario]+= "Se realizó un depósito de "+str(deposito_int)+ " pesos el " + str(fecha) + " a las " + str(hora) + " en el cajero " + cajero + "\n"
 		
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
@@ -612,6 +607,13 @@ def Num_Cajero(Cajero,NmbCajero,x):
 	else:
 		print('Creacion de cajero exitosa')
 
+def IngresoCuenta():
+	cuentas = {}
+	cuentasArchivo = open("usuarios.txt")
+	for line in cuentasArchivo:
+		key, value = line.split()
+		cuentas[key] = int(value)
 
+	return cuentas	
 
 Solicitar_cuenta()
