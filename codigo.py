@@ -5,16 +5,11 @@ Fecha de entrega: 19 / 04 /22
 """
 import sys
 import time
-
-diccionario_historial={"valen1234$":"Esta cuenta es predeterminada \n" , "Fede1234#":"Esta cuenta es predeterminada \n"}
-diccionario_clave={"valen1234$":"1234", "Fede5432#":"5432"}
-diccionario_saldo={"valen1234$":"1412","Fede1234#":"315"}
-diccionario_cajero={"ABC12345":"1,2,5,10,20,50,100"}
-
-#Diccionario que asocia los nombres de usuario con las claves
-Cuentas_usr = {"valen1234$":100,"Fede1234#":200} #???
-Hist_100 ={1:"10001010",2:"00001010"} #???
-
+diccionario = {}
+diccionario_historial = {}
+diccionario_clave = {}
+diccionario_saldo = {}
+diccionario_cajero = {}
 
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
 def Usuario(entrada,x):
@@ -130,7 +125,7 @@ def Verifica_password(password_guardado, password_verificando, contador):
 
 #Permite el acceso de la cuenta al menú de opciones
 def Acceso_cuenta(usuario,password): 
-	cuentas = IngresoCuenta()
+	cuentas = CrearCuenta("Usuario")
 	
 	#Si el nombre de usuario coincide con algún nombre creado anteriormente
 	if usuario in cuentas:
@@ -220,10 +215,6 @@ def Solicitar_cuenta():
 	
 	#Se invoca a la función Usuario(nmb_usr,0) que verifica que el nombre de usuario ingresado cumpla con la expresión regular y esté registrado
 	Usuario(nmb_usr,0)
-
-
-
-	
 	
 #Verifica que un string contenga unicamente a un número entero
 def Es_numero(entrada_usuario, contador): 
@@ -360,7 +351,7 @@ def retirar_dinero(monto, usuario, cajero,dinero_en_cajero):
 
 #Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el fomato "1,2,5,10,20,50,100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantida de billetes
 def convertir_string_a_dinero(string):
-  lista_billetes= string.split(",") #Lista que contiene la cantidad de billetes por denominación
+  lista_billetes= string.split(".") #Lista que contiene la cantidad de billetes por denominación
   return int(lista_billetes[0]) + int(lista_billetes[1])*2 + int(lista_billetes[2])*5 + int(lista_billetes[3])*10 + int(lista_billetes[4])*20 + int(lista_billetes[5])*50 + int(lista_billetes[6])*100
 
 #Se encarga de devolver la menor cantidad de billetes, actualiza la cantidad de billetes en el cajero  y dinero disponible del usuario
@@ -607,13 +598,52 @@ def Num_Cajero(Cajero,NmbCajero,x):
 	else:
 		print('Creacion de cajero exitosa')
 
-def IngresoCuenta():
-	cuentas = {}
-	cuentasArchivo = open("usuarios.txt")
-	for line in cuentasArchivo:
-		key, value = line.split()
-		cuentas[key] = int(value)
+def CrearCuenta(opcion):
+	if opcion == "Usuario":
+		cuentasArchivo = open("usuarios.txt")
+		cuenta = cuentasArchivo.readlines()
+		diccionario_usuario = Splitter(cuenta,0)
+		return diccionario_usuario
 
-	return cuentas	
+	if opcion == "Saldo":
+		cuentasArchivo = open("saldo.txt")
+		cuenta = cuentasArchivo.readlines()
+		diccionario_saldo = Splitter(cuenta,0)
+		return diccionario_saldo
+
+	if opcion == "Historial":
+		cuentasArchivo = open("historial.txt")
+		cuenta = cuentasArchivo.readlines()
+		diccionario_historial = Splitter(cuenta,0)
+		return diccionario_historial 
+
+	if opcion == "Cajero":
+		cuentasArchivo = open("cajero.txt")
+		cuenta = cuentasArchivo.readlines()
+		diccionario_cajero = Splitter(cuenta,0)
+		return diccionario_cajero
+
+def Splitter(cuenta,x):
+	cuentaComa = cuenta[0].split(",")
+	if len(cuentaComa)> x:
+		cuentaRec =cuentaComa[x].split()
+		key,value = cuentaRec
+		keyRec = key
+		valueRec = int(value)
+		diccionario[keyRec] = valueRec
+		x+=1
+		Splitter(cuenta,x)
+	else:
+		return diccionario
+
+	return diccionario
+
+def IniciacionCuentas():
+	CrearCuenta("Usuario")
+	CrearCuenta("Saldo")
+	CrearCuenta("Historial")
+	CrearCuenta("Cajero")
 
 Solicitar_cuenta()
+IniciacionCuentas()
+
