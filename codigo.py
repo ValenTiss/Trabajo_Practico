@@ -359,7 +359,7 @@ def retirar_dinero(monto, usuario, cajero,dinero_en_cajero):
     else: 
       print("Dinero no disponible en este cajero, por favor desplácese a otro cajero o vuelva en unos días cuando se llenen las reservas")
   else:
-    print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco #### pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana")
+    print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco #### pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana") #???
 
 #Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el formato "1,2,5,10,20,50,100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantidad de billetes
 def convertir_string_a_dinero(string):
