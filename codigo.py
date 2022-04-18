@@ -185,7 +185,7 @@ def Solicitar_cuenta():
 def Inicio():  
 
   #Guarda la opción para saber si el usuario desea ingresar como banquero o como usuario
-  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ ???
 
   #Si el usuario escribió algo
   if banquero_o_usuario != "":
@@ -214,6 +214,10 @@ def Inicio():
 
 	    #Se le solicitan los datos al usuario 		
 	    Solicitar_cuenta()
+		
+	  else:
+	    a=0 #???
+	    #terminar()
   else:
 	a=0 #???
 	#terminar()
