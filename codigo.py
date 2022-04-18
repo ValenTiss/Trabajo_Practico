@@ -675,6 +675,208 @@ diccionario_saldo = CrearCuenta("Saldo")
 diccionario_cajero = CrearCuenta("Cajero")
 diccionario_historial = CrearCuenta("Historial")
 
+#------------
+#Esta función despliega las opciones del banquero para poder crear nuevos usuarios y cajeros, además, rellenar los cajeros
+def Consola_banquero():	
+  desicion= input("Bienvenido banquero \n presione 1 si desea crear un nuevo usuario, 2 si desea crear un nuevo cajero, 3 si desea rellenar de billetes algún cajero: ")
+
+  #Si desicion no es una hilera vacía
+  if desicion != "":
+    
+    #Si el banquero seleccionó 1
+    if ord(desicion)==49:
+      return crear_usuario()
+    
+    #Si el banquero seleccionó 2
+    elif ord(desicion)==50:
+      return crear_cajero()
+
+    #Si el banquero seleccionó 3
+    elif ord(desicion)==51:
+      #Variable que contiene el nombre de un cajero digitado por el usuario
+      cajero= input("Ingrese el nombre del cajero en el que desea retirar su dinero: ")
+      
+      #Si el cajero digitado por el usuario es un cajero existente
+      if cajero in diccionario_cajero:
+        return rellenar_cajero(cajero)
+    
+    else:
+      a=0 #???
+      #terminar()
+  else:
+    a=0 #??? 
+    #terminar()
+
+
+
+
+
+
+def crear_usuario():
+  #Variable que contiene el nombre de usuario de la cuenta que se desea crear
+  posible_usuario= input("Por favor ingrese el nombre de usuario de la cuenta que desea agregar al sistema: ")
+  
+  #Si el posible nombre de usuario cumple con la expresion regular
+  if Aceptar_nombre_usuario(posible_usuario,0,0):
+    #Si el nombre de usuario ya existe
+    if not(posible_usuario in diccionario_historial):
+      
+      #Se rellenan los diccionarios
+      tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split(" ")
+      fecha= tiempo[0]
+      hora= tiempo[1]
+      diccionario_historial[posible_usuario]= "Esta cuenta se creó el "+  fecha + " a las "+ hora + "\n"
+
+      diccionario_clave[posible_usuario]= random.randint(1000, 9999)
+      
+      diccionario_saldo[posible_usuario]= "0"
+      print("La cuenta posee un saldo de 0 pesos")
+      depositar= input("Si desea realizar un depósito a su cuenta presione 1")
+      
+      #Si se desea realizar un depósito a la cuenta
+      if depositar=="1":
+        return Menu(depositar, posible_usuario)
+      
+      #Si se desea que la cuenta quede sin dinero
+      else:
+        print("Se regresará al menú del banquero")
+        return Consola_banquero()
+    #Nombre de usuario ya existe
+    else:
+        print("Nombre de usuario ya existe. Se regresará al menú para el banquero")
+        return Consola_banquero()
+  #posible_usuario no cumple con la expresión regular
+  else:
+    print("Nombre de usuario no válido para su creación debido a que no cumple la expresión regular")
+
+
+
+
+
+
+
+#Crea un nuevo cajero si el nombre de cajero cumple con la expresión regular 
+def crear_cajero():
+
+  #Variable que contiene el nombre del cajero que se desea crear
+  posible_cajero= input("Por favor ingrese el nombre del cajero que desea agregar al sistema: ")
+  
+  #Si el posible nombre del cajero cumple con la expresion regular
+  if Aceptar_nombre_cajero(posible_cajero,0,0):
+    #Si el nombre del cajero ya existe
+    if not(posible_cajero in diccionario_cajero):
+      
+      #Se rellena el diccionarios
+      diccionario_cajero[posible_cajero]= "0,0,0,0,0,0,0"
+      print("El cajero "+ posible_cajero+ " está vacío, se procede a rellenarlo")
+      return rellenar_cajero(posible_cajero)
+
+    #Nombre de usuario ya existe
+    else:
+        print("Este nombre de cajero ya existe. Se regresará al menú para el banquero")
+        return Consola_banquero()
+  #posible_cajero no cumple con la expresión regular
+  else:
+    print("Nombre de cajero no válido para su creación")
+    
+
+
+#Verifica que el nombre para un usuario cumpla con la expresión regular
+def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):  
+  terminar = contador== len(posible_usuario)
+  if not terminar:  
+    if exp_regular == 0:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      elif 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 1:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+          return False
+    elif exp_regular == 2:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 3:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular == 4:
+      if ord(posible_usuario[contador])== 33 or ord(posible_usuario[contador])== 35 or ord(posible_usuario[contador])== 36 or ord(posible_usuario[contador])== 38 or ord(posible_usuario[contador])== 63:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_usuario(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    else:
+      return False
+  elif len(posible_usuario) > 0 and exp_regular == 5:
+    return True
+  else:
+    return False
+
+
+#Verifica que el nombre para un cajero cumpla con la expresión regular 
+def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  
+  terminar = contador== len(posible_usuario)
+  if not terminar:  
+    if exp_regular == 0 or exp_regular == 1 or exp_regular == 2:
+      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    elif exp_regular >= 3:
+      if 48<=ord(posible_usuario[contador])<=57:
+        exp_regular+=1
+        contador+=1
+        return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      else:
+        return False
+    else:
+      return False
+  elif len(posible_usuario) > 0 and exp_regular >= 4:
+    return True
+  else:
+    return False
+
+
+
+
+#Permite ingresar billetes a un cajero existente
+def rellenar_cajero(cajero):
+  billete_100= input("Digite la cantidad de billetes de 100 pesos que desea introducir:")
+  billete_50= input("Digite la cantidad de billetes de 50 pesos que desea introducir:")
+  billete_20= input("Digite la cantidad de billetes de 20 pesos que desea introducir:")
+  billete_10= input("Digite la cantidad de billetes de 10 pesos que desea introducir:")
+  billete_5= input("Digite la cantidad de billetes de 5 pesos que desea introducir:")
+  billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
+  billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
+  if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
+    deposito = billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
+    actualizar_cajero_metiendo(cajero, deposito)
+    deposito_int= convertir_string_a_dinero(deposito)
+    print("Se agregó exitosamente "+str(deposito_int)+" pesos al cajero.")
+    print("Se procede a volver al menú del banquero")
+    return Consola_banquero()
+
+
 
 Solicitar_cuenta()
 Finalizar()
