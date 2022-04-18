@@ -134,7 +134,7 @@ def Acceso_cuenta(usuario,password):
 	if usuario in cuentas:
 		
 		#Si la clave es correcta para el usuario seleccionado
-		if(Verifica_password(cuentas[usuario],password,0) ):
+		if cuentas[usuario]==password:
 				print("Datos ingresados correctamente.")
 				Inicio()
 				
