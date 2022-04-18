@@ -1,1 +1,1 @@
-valen1234$ Esta cuenta es predeterminada \n,Fede1234# Esta cuenta es predeterminada \n
+valen1234$:Esta cuenta es predeterminada\n,Fede1234#:Esta cuenta es predeterminada\n
