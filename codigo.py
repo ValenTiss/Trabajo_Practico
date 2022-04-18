@@ -361,7 +361,7 @@ def retirar_dinero(monto, usuario, cajero,dinero_en_cajero):
   else:
     print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco #### pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana")
 
-#Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el fomato "1,2,5,10,20,50,100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantida de billetes
+#Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el formato "1,2,5,10,20,50,100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantidad de billetes
 def convertir_string_a_dinero(string):
   lista_billetes= string.split(".") #Lista que contiene la cantidad de billetes por denominación
   return int(lista_billetes[0]) + int(lista_billetes[1])*2 + int(lista_billetes[2])*5 + int(lista_billetes[3])*10 + int(lista_billetes[4])*20 + int(lista_billetes[5])*50 + int(lista_billetes[6])*100
