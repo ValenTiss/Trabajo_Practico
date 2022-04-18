@@ -12,7 +12,7 @@ diccionario_saldo = {}
 diccionario_cajero = {}
 
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
-def Usuario(entrada,x):
+def Usuario(entrada,x): #??? no deberíamos cambiar el parámetro x por algo más significatico?
 	entrada_len = len(entrada)
 	#Se crea una variable para hacer que la funcion sea recursiva.
 	if(x < entrada_len):
@@ -180,32 +180,42 @@ def Solicitar_cuenta():
 def Inicio():  
 
   #Guarda la opción para saber si el usuario desea ingresar como banquero o como usuario
-  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ 
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ ???
 
-  #Si el usuario ingresa el número 1 por lo que desea ingresar como banquero
-  if ord(banquero_o_usuario) == 49:
-
-    #Se solicita la clave del banquero y se guarda en la variable clave_banquero
-    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
-	
-    #Si la clave del banquero es correcta
-    if clave_banquero == "SAUL":
-    	a=0 
-	   #???
-      #Despliega las opciones del banquero	
-      #Consola_banquero()	
-	
-    #La clave del banquero se introdujo de manera incorrecta	
-    else:
+  #Si el usuario escribió algo
+  if banquero_o_usuario != "":
 		
-      #Se notifica el error		
-      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
+	  #Si el usuario ingresa el número 1 por lo que desea ingresar como banquero
+	  if ord(banquero_o_usuario) == 49:
 
-  #Si el usuario ingresa el número 1 por lo que desea ingresar como cliente del banco 
-  elif ord(banquero_o_usuario) == 50:
-    
-    #Se le solicitan los datos al usuario 		
-    Solicitar_cuenta()
+	    #Se solicita la clave del banquero y se guarda en la variable clave_banquero
+	    clave_banquero = input("Ingrese la clave para poder ingresar como banquero: ") #La clave es SAUL
+
+	    #Si la clave del banquero es correcta
+	    if clave_banquero == "SAUL":
+		a=0 
+		   #???
+	      #Despliega las opciones del banquero	
+	      #Consola_banquero()	
+
+	    #La clave del banquero se introdujo de manera incorrecta	
+	    else:
+
+	      #Se notifica el error		
+	      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
+
+	  #Si el usuario ingresa el número 1 por lo que desea ingresar como cliente del banco 
+	  elif ord(banquero_o_usuario) == 50:
+
+	    #Se le solicitan los datos al usuario 		
+	    Solicitar_cuenta()
+		
+	  else:
+	    a=0 #???
+	    #terminar()
+  else:
+	a=0 #???
+	#terminar()
 
 #Función que se encarga de pedir el nombre de usuario y llamar a la función Usuario(nmb_usr,0) para verificar su existencia
 def Solicitar_cuenta():
