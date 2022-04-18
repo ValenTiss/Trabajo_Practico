@@ -17,7 +17,7 @@ Hist_100 ={1:"10001010",2:"00001010"} #???
 
 
 #La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
-def Usuario(entrada,x):
+def Usuario(entrada,x): #??? no deberíamos cambiar el parámetro x por algo más significatico?
 	entrada_len = len(entrada)
 	#Se crea una variable para hacer que la funcion sea recursiva.
 	if(x < entrada_len):
