@@ -97,34 +97,7 @@ def Es_pin(entrada_usuario, contador):
   #La hilera no tiene 4 dígitos
   return False
 
-#Verifica que la contraseña ingresada coincida con la contraseña del usuario
-def Verifica_password(password_guardado, password_verificando, contador): 
-  
-  #si el password_verificando es un número de 4 dígitos
-  if Es_pin(password_verificando,0):
-    tamano = len(password_verificando)-1  #tamaño de password_verificando -1, se utiliza para definir la condición de parada, representa las posiciones de cada caracter de password_verificando 
-    digito_actual = password_guardado%10 + 48 #valor ASCII del último dígito de password_guardado
-    nuevo_numero = password_guardado //10 #elimina el último dígito de password_wardado, se usa para el llamado recursivo
 
-    #si no se han recorrido todos los numeros de la contraseña
-    if password_guardado > 0 and contador <= tamano:
-      digito_verificando = ord(password_verificando[tamano-contador]) #valor ASCII de cada caracter del password digitado por el usuario
-
-      #si el cada dígito de la contraseña del usuario es igual al de la contraseña escrita por el usuario
-      if digito_actual == digito_verificando:
-        contador += 1
-        return Verifica_password(nuevo_numero, password_verificando, contador)
-      
-      #Algún número digitado no coincide con la contraseña guardada en el sistema
-      else:
-        return False
-
-    #Se verificó exitosamente cada caracter
-    else:
-      return True 
-
-  #Los caracteres ingresados no representan un número de 4 dígitos
-  return False
 
 #Permite el acceso de la cuenta al menú de opciones
 def Acceso_cuenta(usuario,password): 
