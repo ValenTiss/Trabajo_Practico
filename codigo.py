@@ -135,10 +135,8 @@ def Acceso_cuenta(usuario,password):
 		
 		#Si la clave es correcta para el usuario seleccionado
 		if(Verifica_password(cuentas[usuario],password,0) ):
-				print("Datos ingresados correctamente. \n Menú de opciones: \n")
-				
-				#Se desplegan las opciones del menú para el usuario
-				Menu(input("Ingrese si quiere realizar un retiro(0), depositar dinero en su cuenta(1), ver su saldo actual(2) o ver su historial(3): "),usuario)
+				print("Datos ingresados correctamente.")
+				Inicio()
 				
 		#La clave no coincide con la clave del usuario		
 		else:
@@ -183,10 +181,10 @@ def Solicitar_cuenta():
 def Inicio():  
 
   #Guarda la opción para saber si el usuario desea ingresar como banquero o como usuario
-  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 \n Si desea ingresar como cliente presione 2 \n" ) #Tenemos que elegir el nombre del Banco ------------ ???
+  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 , si desea ingresar como cliente presione 2 " ) #Tenemos que elegir el nombre del Banco ------------ ???
 
   #Si el usuario escribió algo
-  if banquero_o_usuario != "":
+  if banquero_o_usuario == "1":
 		
 	  #Si el usuario ingresa el número 1 por lo que desea ingresar como banquero
 	  if ord(banquero_o_usuario) == 49:
@@ -234,8 +232,9 @@ def Es_numero(entrada_usuario, contador):
 	Entradas: entrada_usuario (string), contador (0)
   Salidas: True o False
 	"""
-	if len(entrada_usuario) != 0: 
-		if contador < len(entrada_usuario):
+	entrada_usuario = str(entrada_usuario)
+	if len(str(entrada_usuario)) != 0: 
+		if contador < len(str(entrada_usuario)):
 			if 48 <= ord(entrada_usuario[contador]) <= 57 :
 				contador+=1
 				return Es_numero(entrada_usuario, contador)
@@ -249,15 +248,18 @@ def Es_numero(entrada_usuario, contador):
 	
 def volver_al_menu(usuario):
 	decision=input("Si desea hacer un nuevo retiro presione 0, realizar un depósito presione 1, revisar su saldo presione 2 o ver su historial de transacciones presione 3: ")
-	if decision!="0":
-		if 48 <=ord(decision) <= 51:
-			return Menu(decision,usuario)
-		else:
-			a=0 #???
-			#terminar() ???
-	else:
-		a=0 #???
-		#terminar() ???
+	if decision =="0":
+		return Menu(decision,usuario)
+	elif decision =="1":
+		return Menu(decision,usuario)
+	elif decision =="2":
+		return Menu(decision,usuario)
+	elif decision =="3":
+		return Menu(decision,usuario)
+
+
+
+		
 
 #Esta función permite llevar a cabo las opciones del usuario, llamando a otras funciones dependiendo de lo seleccionado por el usuario con anterioridad
 def Menu(decision,usuario_adm):
@@ -383,16 +385,16 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 	billete_1= devolver_billete_1(monto, dinero_en_cajero)
 	monto -= billete_1*1
 	if monto==0:
-		disminucion_cajero= str(billete_1)+","+str(billete_2)+","+str(billete_5)+","+str(billete_10)+","+str(billete_20)+","+str(billete_50)+","+str(billete_100) #cantidad de billetes de cada denominación que se están retirando 
+		disminucion_cajero= str(billete_1)+"."+str(billete_2)+"."+str(billete_5)+"."+str(billete_10)+"."+str(billete_20)+"."+str(billete_50)+"."+str(billete_100) #cantidad de billetes de cada denominación que se están retirando 
 		disminucion_cajero_int= convertir_string_a_dinero(disminucion_cajero)
 		nuevo_saldo= int(diccionario_saldo[usuario]) - disminucion_cajero_int
 		diccionario_saldo[usuario]= str(nuevo_saldo)
 		print("Transacción realizada con éxito, el saldo en su cuenta ahora es de "+ diccionario_saldo[usuario] +" pesos")
-		tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split(" ")
+		tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split()
 		fecha= tiempo[0]
 		hora= tiempo[1]
 		#Se actualiza el historial
-		diccionario_historial[usuario]+= "Se realizó un retiro de   "+ str(disminucion_cajero_int) + " pesos el " + fecha + " a las " + hora + " en el cajero " + cajero + "\n"
+		diccionario_historial[usuario]+= " Se realizó un retiro de   "+ str(disminucion_cajero_int) + " pesos el " + fecha + " a las " + hora + " en el cajero " + cajero + "\n"
 		actualizar_cajero_sacando(cajero, disminucion_cajero)
 
 		#Si desea cerrar el programa
@@ -408,8 +410,8 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 
 
 def actualizar_cajero_sacando(cajero, disminucion):
-  dinero_actual_cajero=diccionario_cajero[cajero].split(",")
-  disminucion= disminucion.split(",")
+  dinero_actual_cajero=diccionario_cajero[cajero].split(".")
+  disminucion= disminucion.split(".")
   billete_1= str(int(dinero_actual_cajero[0])-int(disminucion[0]))
   billete_2= str(int(dinero_actual_cajero[1])-int(disminucion[1]))
   billete_5= str(int(dinero_actual_cajero[2])-int(disminucion[2]))
@@ -426,7 +428,7 @@ def devolver_billete_100(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_100_cajero=  int(dinero_en_cajero.split(",")[6]) #cantidad de billetes de 100 en el cajero
+  billetes_100_cajero=  int(dinero_en_cajero.split(".")[6]) #cantidad de billetes de 100 en el cajero
   if monto>=100: #si el dinero a retirar es mayor a 100
     billetes_necesarios= monto // 100  # Posible cantidad de billetes de 100 a retirar
     if billetes_necesarios <= billetes_100_cajero: # si la cantidad de posibles billetes 100 a retirar están en el cajero
@@ -441,7 +443,7 @@ def devolver_billete_50(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_50_cajero=  int(dinero_en_cajero.split(",")[5]) #cantidad de billetes de 50 en el cajero
+  billetes_50_cajero=  int(dinero_en_cajero.split(".")[5]) #cantidad de billetes de 50 en el cajero
   if monto>=50: #si el dinero a retirar es mayor a 50
     billetes_necesarios= monto // 50  # Posible cantidad de billetes de 50 a retirar
     if billetes_necesarios <= billetes_50_cajero: # si la cantidad de posibles billetes 50 a retirar están en el cajero
@@ -456,7 +458,7 @@ def devolver_billete_20(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_20_cajero=  int(dinero_en_cajero.split(",")[4]) #cantidad de billetes de 20 en el cajero
+  billetes_20_cajero=  int(dinero_en_cajero.split(".")[4]) #cantidad de billetes de 20 en el cajero
   if monto>=20: #si el dinero a retirar es mayor a 20
     billetes_necesarios= monto // 20  # Posible cantidad de billetes de 20 a retirar
     if billetes_necesarios <= billetes_20_cajero: # si la cantidad de posibles billetes 20 a retirar están en el cajero
@@ -471,7 +473,7 @@ def devolver_billete_10(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_10_cajero=  int(dinero_en_cajero.split(",")[3]) #cantidad de billetes de 10 en el cajero
+  billetes_10_cajero=  int(dinero_en_cajero.split(".")[3]) #cantidad de billetes de 10 en el cajero
   if monto>=10: #si el dinero a retirar es mayor a 10
     billetes_necesarios= monto // 10  # Posible cantidad de billetes de 10 a retirar
     if billetes_necesarios <= billetes_10_cajero: # si la cantidad de posibles billetes 10 a retirar están en el cajero
@@ -486,7 +488,7 @@ def devolver_billete_5(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_5_cajero=  int(dinero_en_cajero.split(",")[2]) #cantidad de billetes de 5 en el cajero
+  billetes_5_cajero=  int(dinero_en_cajero.split(".")[2]) #cantidad de billetes de 5 en el cajero
   if monto>=5: #si el dinero a retirar es mayor a 5
     billetes_necesarios= monto // 5  # Posible cantidad de billetes de 5 a retirar
     if billetes_necesarios <= billetes_5_cajero: # si la cantidad de posibles billetes 5 a retirar están en el cajero
@@ -502,7 +504,7 @@ def devolver_billete_2(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_2_cajero=  int(dinero_en_cajero.split(",")[1]) #cantidad de billetes de 2 en el cajero
+  billetes_2_cajero=  int(dinero_en_cajero.split(".")[1]) #cantidad de billetes de 2 en el cajero
   if monto>=2: #si el dinero a retirar es mayor a 2
     billetes_necesarios= monto // 2  # Posible cantidad de billetes de 2 a retirar
     if billetes_necesarios <= billetes_2_cajero: # si la cantidad de posibles billetes 2 a retirar están en el cajero
@@ -518,7 +520,7 @@ def devolver_billete_1(monto, dinero_en_cajero):
   """
   Entradas: Monto (int), dinero_en_cajero (string)
   """
-  billetes_1_cajero=  int(dinero_en_cajero.split(",")[0]) #cantidad de billetes de 1 en el cajero
+  billetes_1_cajero=  int(dinero_en_cajero.split(".")[0]) #cantidad de billetes de 1 en el cajero
   if monto>=1: #si el dinero a retirar es mayor a 1
     billetes_necesarios= monto // 1  # Posible cantidad de billetes de 1 a retirar
     if billetes_necesarios <= billetes_1_cajero: # si la cantidad de posibles billetes 1 a retirar están en el cajero
@@ -529,8 +531,8 @@ def devolver_billete_1(monto, dinero_en_cajero):
     return 0
 
 def actualizar_cajero_metiendo(cajero, adicion):
-  dinero_actual_cajero=diccionario_cajero[cajero].split(",")
-  adicion= adicion.split(",")
+  dinero_actual_cajero=diccionario_cajero[cajero].split(".")
+  adicion= adicion.split(".")
   billete_1= str(int(dinero_actual_cajero[0])+int(adicion[0]))
   billete_2= str(int(dinero_actual_cajero[1])+int(adicion[1]))
   billete_5= str(int(dinero_actual_cajero[2])+int(adicion[2]))
@@ -538,9 +540,9 @@ def actualizar_cajero_metiendo(cajero, adicion):
   billete_20= str(int(dinero_actual_cajero[4])+int(adicion[4]))
   billete_50= str(int(dinero_actual_cajero[5])+int(adicion[5]))
   billete_100= str(int(dinero_actual_cajero[6])+int(adicion[6]))
-  dinero_actualizado_cajero= billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
+  dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
   diccionario_cajero[cajero]= dinero_actualizado_cajero
-  return print("Actualizacion exitosa, el cajero cuenta con "+ str(diccionario_cajero[cajero])) #??? se puede borrar o escribir mejor
+  return print("Actualizacion exitosa, el cajero cuenta con "+ diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
 
 
 
@@ -557,7 +559,7 @@ def depositar_dinero(usuario, cajero):
 	billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
 	billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
 	if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
-		deposito = billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
+		deposito = billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
 		actualizar_cajero_metiendo(cajero, deposito)
 		diccionario_saldo[usuario]= str(int(diccionario_saldo[usuario])+ convertir_string_a_dinero(deposito))
 		deposito_int= convertir_string_a_dinero(deposito)
@@ -566,7 +568,7 @@ def depositar_dinero(usuario, cajero):
 		fecha= tiempo[0]
 		hora= tiempo[1]
 		#Se actualiza el historial
-		diccionario_historial[usuario]+= "Se realizó un depósito de "+str(deposito_int)+ " pesos el " + str(fecha) + " a las " + str(hora) + " en el cajero " + cajero + "\n"
+		diccionario_historial[usuario]+= "Se realizó un depósito de "+str(deposito_int)+ " pesos el " + str(fecha) + " a las " + str(hora) + " en el cajero " + str(cajero) + "\n"
 		
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
@@ -614,52 +616,62 @@ def CrearCuenta(opcion):
 	if opcion == "Usuario":
 		cuentasArchivo = open("usuarios.txt")
 		cuenta = cuentasArchivo.readlines()
-		diccionario_usuario = Splitter(cuenta,0)
-		return diccionario_usuario
+		diccionario_us = Splitter(cuenta,0,diccionario_clave) 
+		diccionario_u = EntValue(diccionario_us)
+		return diccionario_u
 
 	elif opcion == "Saldo":
 		cuentasArchivo = open("saldo.txt")
 		cuenta = cuentasArchivo.readlines()
-		diccionario_s = Splitter(cuenta,0)
-		return diccionario_s
+		diccionario_us = Splitter(cuenta,0,diccionario_saldo)
+		diccionario_u = EntValue(diccionario_us)
+		return diccionario_u
 
 	elif opcion == "Cajero":
 		cuentasArchivo = open("cajero.txt")
 		cuenta = cuentasArchivo.readlines()
-		diccionario_c = Splitter(cuenta,0)
-		return diccionario_c
+		diccionario_ca = Splitter(cuenta,0,diccionario_cajero)
+		return diccionario_ca
 
+	elif opcion == "Historial":
+		cuentasArchivo = open("historial.txt")
+		cuenta = cuentasArchivo.readlines()
+		diccionario_h = Splitter(cuenta,0,diccionario_historial)
+		return diccionario_h
 
-def Splitter(cuenta,x):
-	diccionario = {}
+def Splitter(cuenta,x,diccionario):
 	cuentaComa = cuenta[0].split(",")
 	if len(cuentaComa)> x:
 		try:
 			cuentaRec =cuentaComa[x].split()
 			key,value = cuentaRec
 			keyRec = key
-			valueRec = int(value)
+			valueRec = value
 			diccionario[keyRec] = valueRec
 			x+=1
-			Splitter(cuenta,x)
+			Splitter(cuenta,x,diccionario)
 		except ValueError:
-			cuentaRec =cuentaComa[x].split()
+			cuentaRec =cuentaComa[x].split(":")
 			key,value = cuentaRec
 			keyRec = key
 			valueRec = value
 			diccionario[keyRec] = valueRec
 			x+=1
-			Splitter(cuenta,x)
-
+			Splitter(cuenta,x,diccionario)
 	else:
 		return diccionario
 
 	return diccionario
 
+def EntValue(diccionario):
+	diccionario = dict((k, int(v)) for k, v in diccionario.items())
+	return diccionario
+
+
 diccionario_clave = CrearCuenta("Usuario")
 diccionario_saldo = CrearCuenta("Saldo")
 diccionario_cajero = CrearCuenta("Cajero")
+diccionario_historial = CrearCuenta("Historial")
+
 
 Solicitar_cuenta()
-IniciacionCuentas()
-
