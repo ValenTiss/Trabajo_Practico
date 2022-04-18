@@ -193,8 +193,7 @@ def Inicio():
 
 	    #Si la clave del banquero es correcta
 	    if clave_banquero == "SAUL":
-		a=0 
-		   #???
+	    	a = 0 #???
 	      #Despliega las opciones del banquero	
 	      #Consola_banquero()	
 
@@ -214,8 +213,8 @@ def Inicio():
 	    a=0 #???
 	    #terminar()
   else:
-	a=0 #???
-	#terminar()
+  	a=0 #???
+		#terminar()
 
 #Función que se encarga de pedir el nombre de usuario y llamar a la función Usuario(nmb_usr,0) para verificar su existencia
 def Solicitar_cuenta():
@@ -304,7 +303,7 @@ def Menu(decision,usuario_adm):
 		
 		#Mostrar saldo
 		elif ord(decision) == 50:
-			print("El saldo del usuario \""+usuario_adm+ "\" es de "+ diccionario_saldo[usuario_adm]+" pesos.")
+			print("El saldo del usuario \""+str(usuario_adm)+ "\" es de "+ str(diccionario_saldo[usuario_adm])+" pesos.")
 			return volver_al_menu(usuario_adm)
 			
 		#depositar dinero
@@ -615,44 +614,48 @@ def CrearCuenta(opcion):
 		diccionario_usuario = Splitter(cuenta,0)
 		return diccionario_usuario
 
-	if opcion == "Saldo":
+	elif opcion == "Saldo":
 		cuentasArchivo = open("saldo.txt")
 		cuenta = cuentasArchivo.readlines()
-		diccionario_saldo = Splitter(cuenta,0)
-		return diccionario_saldo
+		diccionario_s = Splitter(cuenta,0)
+		return diccionario_s
 
-	if opcion == "Historial":
-		cuentasArchivo = open("historial.txt")
-		cuenta = cuentasArchivo.readlines()
-		diccionario_historial = Splitter(cuenta,0)
-		return diccionario_historial 
-
-	if opcion == "Cajero":
+	elif opcion == "Cajero":
 		cuentasArchivo = open("cajero.txt")
 		cuenta = cuentasArchivo.readlines()
-		diccionario_cajero = Splitter(cuenta,0)
-		return diccionario_cajero
+		diccionario_c = Splitter(cuenta,0)
+		return diccionario_c
+
 
 def Splitter(cuenta,x):
+	diccionario = {}
 	cuentaComa = cuenta[0].split(",")
 	if len(cuentaComa)> x:
-		cuentaRec =cuentaComa[x].split()
-		key,value = cuentaRec
-		keyRec = key
-		valueRec = int(value)
-		diccionario[keyRec] = valueRec
-		x+=1
-		Splitter(cuenta,x)
+		try:
+			cuentaRec =cuentaComa[x].split()
+			key,value = cuentaRec
+			keyRec = key
+			valueRec = int(value)
+			diccionario[keyRec] = valueRec
+			x+=1
+			Splitter(cuenta,x)
+		except ValueError:
+			cuentaRec =cuentaComa[x].split()
+			key,value = cuentaRec
+			keyRec = key
+			valueRec = value
+			diccionario[keyRec] = valueRec
+			x+=1
+			Splitter(cuenta,x)
+
 	else:
 		return diccionario
 
 	return diccionario
 
-def IniciacionCuentas():
-	CrearCuenta("Usuario")
-	CrearCuenta("Saldo")
-	CrearCuenta("Historial")
-	CrearCuenta("Cajero")
+diccionario_clave = CrearCuenta("Usuario")
+diccionario_saldo = CrearCuenta("Saldo")
+diccionario_cajero = CrearCuenta("Cajero")
 
 Solicitar_cuenta()
 IniciacionCuentas()
