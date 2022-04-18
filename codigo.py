@@ -11,26 +11,33 @@ diccionario_clave = {}
 diccionario_saldo = {}
 diccionario_cajero = {}
 
-#La funcion Usuario se utliza para determinar si los caracteres son letras en minuscula o mayuscula.
+#La funcion Usuario se utiliza para determinar si los caracteres son letras en minuscula o mayuscula.
 def Usuario(entrada,x): #??? no deberíamos cambiar el parámetro x por algo más significatico?
-	entrada_len = len(entrada)
-	#Se crea una variable para hacer que la funcion sea recursiva.
-	if(x < entrada_len):
-		#Si el caracter es una letra se le suma 1 a la funcion.
-		if ( 90>= ord(entrada[x]) >= 65 or 122>= ord(entrada[x]) >= 97 ):
-			x +=1
-			Usuario(entrada,x)
+	#Si se recibe una hilera no vacia
+	if entrada != "":
+		entrada_len = len(entrada)
+		#Se crea una variable para hacer que la funcion sea recursiva.
+		if(x < entrada_len):
+			#Si el caracter es una letra se le suma 1 a la funcion.
+			if ( 90>= ord(entrada[x]) >= 65 or 122>= ord(entrada[x]) >= 97 ):
+				x +=1
+				Usuario(entrada,x)
 
-		#Si el caracter es un numero se entrada a la funcion Exp_Num.
-		elif (48 <= (ord(entrada[x])) <= 57):
-			Exp_Num(entrada,x,0)
+			#Si el caracter es un numero se entrada a la funcion Exp_Num.
+			elif (48 <= (ord(entrada[x])) <= 57):
+				Exp_Num(entrada,x,0)
 
-		#El usuario ingreso un caracter no correcto,es rebotado del sistema.
+			#El usuario ingreso un caracter no correcto,es rebotado del sistema.
+			else:
+				print("Usuario no valido.")
+				Usuario(input("Ingrese su usuario: "), 0 )
+
+		#El usuario ingreso una cuenta no valida.
 		else:
 			print("Usuario no valido.")
 			Usuario(input("Ingrese su usuario: "), 0 )
-
-	#El usuario ingreso una cuenta no valida.
+			
+	#El usuario no ingresó ningún caracter
 	else:
 		print("Usuario no valido.")
 		Usuario(input("Ingrese su usuario: "), 0 )
