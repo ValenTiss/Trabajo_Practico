@@ -950,26 +950,35 @@ def Aceptar_nombre_usuario(posible_usuario,exp_regular,contador):
 def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):  
   #Variable que contiene a la condición de parada	
   terminar = contador== len(posible_usuario)
-  #Si 
-  if not terminar:  
+  #Si no se ha llegado a la condición de parada
+  if not terminar:
+    #Si se ha encontrado de 1 a 3 letras mayúsculas
     if exp_regular == 0 or exp_regular == 1 or exp_regular == 2:
-      if 65<=ord(posible_usuario[contador])<=90 or 97 <= ord(posible_usuario[contador]) <= 122:
+      #Si es una letra mayúscula		
+      if 65<=ord(posible_usuario[contador])<=90:
         exp_regular+=1
         contador+=1
         return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      #No es una letra mayúscula
       else:
         return False
+    #Si ya se encontraron 3 letras mayúsculas y algún o ningún número
     elif exp_regular >= 3:
+      #Si el carácter es un número
       if 48<=ord(posible_usuario[contador])<=57:
         exp_regular+=1
         contador+=1
         return Aceptar_nombre_cajero(posible_usuario,exp_regular,contador)
+      #Si el carácter no es un número
       else:
         return False
+    #Se encontró un caracter que hace que no se cumpla la expresión regular
     else:
       return False
+  #Si la hilera no está vacía y se verificó que cumple la expresión regular
   elif len(posible_usuario) > 0 and exp_regular >= 4:
     return True
+  #La hilera está vacía o no cumple la expresión regular
   else:
     return False
 
@@ -978,6 +987,9 @@ def Aceptar_nombre_cajero(posible_usuario,exp_regular,contador):
 
 #Permite ingresar billetes a un cajero existente
 def rellenar_cajero(cajero):
+  """
+  En las siguientes variables se almacena la cantidad de billetes por cada denominación respectivamente. Estas variables se rellenan con la información proporcionada por el usuario.
+  """
   billete_100= input("Digite la cantidad de billetes de 100 pesos que desea introducir:")
   billete_50= input("Digite la cantidad de billetes de 50 pesos que desea introducir:")
   billete_20= input("Digite la cantidad de billetes de 20 pesos que desea introducir:")
@@ -985,13 +997,21 @@ def rellenar_cajero(cajero):
   billete_5= input("Digite la cantidad de billetes de 5 pesos que desea introducir:")
   billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
   billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
-  if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
+	
+  #Si la información introducida por el usuario representa números
+  if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0):
+    #Esta variable almacena la cantidad de billetes por denominación en el formato de guardado de los billetes	
     deposito = billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+    #Se actualiza el diccionario que almacena la cantidad de billetes en el cajero
     actualizar_cajero_metiendo(cajero, deposito)
+    #Se transforma la cantidad de billetes a una cantidad entera
     deposito_int= convertir_string_a_dinero(deposito)
+    #Se notifica al usuario que la transacción fue exitosa y que se volverá al menú del banquero
     print("Se agregó exitosamente "+str(deposito_int)+" pesos al cajero.")
     print("Se procede a volver al menú del banquero")
     return Consola_banquero()
 
+#Forma de iniciar el sistema
 Inicio()
+#En caso de terminar 
 Finalizar()
