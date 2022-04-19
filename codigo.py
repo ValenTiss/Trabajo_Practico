@@ -7,9 +7,13 @@ import sys
 import time
 import random
 
+#Diccionario que almacena el nombre de usuario y el historial del usuario.
 diccionario_historial = {}
+#Diccionario que almacena el nombre de usuario y la clave del usuario
 diccionario_clave = {}
+#Diccionario que almacena el nombre de usuario y el saldo de la cuenta del usuario
 diccionario_saldo = {}
+#Diccionario que almacena el nombre del cajero y la cantidad de billetes por denominación
 diccionario_cajero = {}
 clave = "usuarios.txt"
 historial = "historial.txt"
@@ -168,12 +172,13 @@ def Inicio():
 
 	      #Se notifica el error		
 	      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
-		
+	
 	  else:
 	    Finalizar()
+  #Si se desea ingresar como cliente
   elif banquero_o_usuario == "2":
   	Solicitar_cuenta()
-
+  #Si no se desea ingresar como ninguno
   else:
   	Finalizar()
   	
@@ -304,7 +309,7 @@ def Menu(decision,usuario_adm):
 			print("El historial del usuario "+ usuario_adm +" es:\n"+diccionario_historial[usuario_adm])
 			return volver_al_menu(usuario_adm)
 
-
+		#No se elige ninguna de las opciones
 		else:
 			Finalizar()
 
@@ -325,9 +330,13 @@ def retirar_dinero(monto, usuario, cajero,dinero_en_cajero):
   dinero_en_cajero_int= convertir_string_a_dinero(dinero_en_cajero) # dinero total del cajero en int
   if monto <= dinero_del_usuario: #verifica si el usuario tiene el monto en su cuenta
     if monto  <= dinero_en_cajero_int: #verifica si el cajero tiene el monto ingresado disponible para retirar
-      return retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero) #Se llama a la función que elige la menor cantidad de billetes para devolver 
+      return retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero) #Se llama a la función que elige la menor cantidad de billetes para devolver
+
+    #El cajero no posee el monto solicitado
     else: 
       print("Dinero no disponible en este cajero, por favor desplácese a otro cajero o vuelva en unos días cuando se llenen las reservas")
+
+  #El usuario no posee el monto solicitado en su cuenta
   else:
     print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco ValFe pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana") 
 
@@ -338,31 +347,50 @@ def convertir_string_a_dinero(string):
 
 #Se encarga de devolver la menor cantidad de billetes, actualiza la cantidad de billetes en el cajero  y dinero disponible del usuario
 def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
+	
+	#Devuelve la mayor cantidad de billetes posibles de 100 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_100= devolver_billete_100(monto, dinero_en_cajero)
 	monto -= billete_100*100
+	#Devuelve la mayor cantidad de billetes posibles de 50 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_50= devolver_billete_50(monto, dinero_en_cajero)
 	monto -= billete_50*50
+	#Devuelve la mayor cantidad de billetes posibles de 20 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_20= devolver_billete_20(monto, dinero_en_cajero)
 	monto -= billete_20*20
+	#Devuelve la mayor cantidad de billetes posibles de 10 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_10= devolver_billete_10(monto, dinero_en_cajero)
 	monto -= billete_10*10
+	#Devuelve la mayor cantidad de billetes posibles de 5 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_5= devolver_billete_5(monto, dinero_en_cajero)
 	monto -= billete_5*5
+	#Devuelve la mayor cantidad de billetes posibles de 2 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_2= devolver_billete_2(monto, dinero_en_cajero)
 	monto -= billete_2*2
+	#Devuelve la mayor cantidad de billetes posibles de 1 posibles mientras existan billetes de esta denominacion en el cajero y no exceda el monto solicitado por el usuario
 	billete_1= devolver_billete_1(monto, dinero_en_cajero)
 	monto -= billete_1*1
+	
+	#Si se puede retirar del cajero el monto solicitado por el usuario
 	if monto==0:
+		#String que convierte la cantidad de billetes que se van a retirar en el formato 1.2.5.10.20.50.100
 		disminucion_cajero= str(billete_1)+"."+str(billete_2)+"."+str(billete_5)+"."+str(billete_10)+"."+str(billete_20)+"."+str(billete_50)+"."+str(billete_100) #cantidad de billetes de cada denominación que se están retirando 
+		#Convierte la hilera de la cantidad de billetes que se van a retirar a un entero con el monto
 		disminucion_cajero_int= convertir_string_a_dinero(disminucion_cajero)
+		#Calcula el nuevo saldo del usuario
 		nuevo_saldo= int(diccionario_saldo[usuario]) - disminucion_cajero_int
+		#Actualiza en el diccionario el saldo del usuario
 		diccionario_saldo[usuario]= str(nuevo_saldo)
+		#Se informa al usuario que se realizó la transacción
 		print("Transacción realizada con éxito, el saldo en su cuenta ahora es de "+ diccionario_saldo[usuario] +" pesos")
+		#Variable que guarda la fecha y hora actual
 		tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split()
+		#Variable que guarda la fecha actual
 		fecha= tiempo[0]
+		#Variable que guarda la hora actual
 		hora= tiempo[1]
 		#Se actualiza el historial
 		diccionario_historial[usuario]+= " Se realizó un retiro de   "+ str(disminucion_cajero_int) + " pesos el " + fecha + " a las " + hora + " en el cajero " + cajero + "\n"
+		#Se actualiza la cantidad de billetes en el cajero
 		actualizar_cajero_sacando(cajero, disminucion_cajero)
 
 		#Si desea cerrar el programa
@@ -372,23 +400,35 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 		else:
 			return volver_al_menu(usuario)
 		
-
+	#No existen la cantidad de billetes solicitados
 	else:
 		return print("No es posible realizar el retiro en este cajero debido a la falta de billetes necesarios")
 
-
+#Actualiza la cantidad de billetes del cajero en el diccionario
 def actualizar_cajero_sacando(cajero, disminucion):
+  #Conjunto que contiene la cantidad de billetes por denominación contenido en el diccionario del cajero 
   dinero_actual_cajero=diccionario_cajero[cajero].split(".")
+  #Conjunto que contiene la cantidad de billetes por denominación que se retira por el usuario	
   disminucion= disminucion.split(".")
+  #Calcula la nueva cantidad de billetes de 1 peso
   billete_1= str(int(dinero_actual_cajero[0])-int(disminucion[0]))
+  #Calcula la nueva cantidad de billetes de 2 peso
   billete_2= str(int(dinero_actual_cajero[1])-int(disminucion[1]))
+  #Calcula la nueva cantidad de billetes de 5 peso
   billete_5= str(int(dinero_actual_cajero[2])-int(disminucion[2]))
+  #Calcula la nueva cantidad de billetes de 10 peso
   billete_10= str(int(dinero_actual_cajero[3])-int(disminucion[3]))
+  #Calcula la nueva cantidad de billetes de 20 peso
   billete_20= str(int(dinero_actual_cajero[4])-int(disminucion[4]))
+  #Calcula la nueva cantidad de billetes de 50 peso
   billete_50= str(int(dinero_actual_cajero[5])-int(disminucion[5]))
+  #Calcula la nueva cantidad de billetes de 100 peso
   billete_100= str(int(dinero_actual_cajero[6])-int(disminucion[6]))
+  #Hilera que contiene la cantidad de billetes por denominación
   dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+  #Se actualiza el diccionario con la nueva cantidad de billetes disponibles
   diccionario_cajero[cajero]= dinero_actualizado_cajero 
+  #Se notifica al usuario que se pudo actualizar correctamente el dinero en el cajero
   return print("Se ha actualizado exitosamente la cantidad de dinero en el cajero, actualmente se posee: "+str(convertir_string_a_dinero(diccionario_cajero[cajero]))+ " pesos") 
 
 #calcula la cantidad de billetes de 100 que se deben y pueden devolver
@@ -401,9 +441,9 @@ def devolver_billete_100(monto, dinero_en_cajero):
     billetes_necesarios= monto // 100  # Posible cantidad de billetes de 100 a retirar
     if billetes_necesarios <= billetes_100_cajero: # si la cantidad de posibles billetes 100 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 100 a retirar no están en el cajero
       return billetes_100_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 100
     return 0
 
 #calcula la cantidad de billetes de 50 que se deben y pueden devolver
@@ -416,9 +456,9 @@ def devolver_billete_50(monto, dinero_en_cajero):
     billetes_necesarios= monto // 50  # Posible cantidad de billetes de 50 a retirar
     if billetes_necesarios <= billetes_50_cajero: # si la cantidad de posibles billetes 50 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 50 a retirar no están en el cajero
       return billetes_50_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 50
     return 0
 
 #calcula la cantidad de billetes de 20 que se deben y pueden devolver
@@ -431,9 +471,9 @@ def devolver_billete_20(monto, dinero_en_cajero):
     billetes_necesarios= monto // 20  # Posible cantidad de billetes de 20 a retirar
     if billetes_necesarios <= billetes_20_cajero: # si la cantidad de posibles billetes 20 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 20 a retirar no están en el cajero
       return billetes_20_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 20
     return 0
 
 #calcula la cantidad de billetes de 10 que se deben y pueden devolver
@@ -446,9 +486,9 @@ def devolver_billete_10(monto, dinero_en_cajero):
     billetes_necesarios= monto // 10  # Posible cantidad de billetes de 10 a retirar
     if billetes_necesarios <= billetes_10_cajero: # si la cantidad de posibles billetes 10 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 10 a retirar no están en el cajero
       return billetes_10_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 10
     return 0
 
 #calcula la cantidad de billetes de 5 que se deben y pueden devolver
@@ -461,9 +501,9 @@ def devolver_billete_5(monto, dinero_en_cajero):
     billetes_necesarios= monto // 5  # Posible cantidad de billetes de 5 a retirar
     if billetes_necesarios <= billetes_5_cajero: # si la cantidad de posibles billetes 5 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 5 a retirar no están en el cajero
       return billetes_5_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 5
     return 0
 
 
@@ -477,9 +517,9 @@ def devolver_billete_2(monto, dinero_en_cajero):
     billetes_necesarios= monto // 2  # Posible cantidad de billetes de 2 a retirar
     if billetes_necesarios <= billetes_2_cajero: # si la cantidad de posibles billetes 2 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 2 a retirar no están en el cajero
       return billetes_2_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 2
     return 0
 
 
@@ -493,27 +533,39 @@ def devolver_billete_1(monto, dinero_en_cajero):
     billetes_necesarios= monto // 1  # Posible cantidad de billetes de 1 a retirar
     if billetes_necesarios <= billetes_1_cajero: # si la cantidad de posibles billetes 1 a retirar están en el cajero
       return billetes_necesarios
-    else:
+    else: #La cantidad de posibles billetes 1 a retirar no están en el cajero
       return billetes_1_cajero
-  else:
+  else: #El dinero a retirar no es mayor a 1
     return 0
 
+#Actualiza la cantidad de billetes disponibles en el diccionario 
 def actualizar_cajero_metiendo(cajero, adicion):
+  #Conjunto que contiene la cantidad de billetes por denominación contenido en el diccionario del cajero 
   dinero_actual_cajero=diccionario_cajero[cajero].split(".")
+  #Conjunto que contiene la cantidad de billetes por denominación que se ingresan al cajero
   adicion= adicion.split(".")
+  #Calcula la nueva cantidad de billetes de 1 peso
   billete_1= str(int(dinero_actual_cajero[0])+int(adicion[0]))
+  #Calcula la nueva cantidad de billetes de 2 peso
   billete_2= str(int(dinero_actual_cajero[1])+int(adicion[1]))
+  #Calcula la nueva cantidad de billetes de 5 peso
   billete_5= str(int(dinero_actual_cajero[2])+int(adicion[2]))
+  #Calcula la nueva cantidad de billetes de 10 peso
   billete_10= str(int(dinero_actual_cajero[3])+int(adicion[3]))
+  #Calcula la nueva cantidad de billetes de 20 peso
   billete_20= str(int(dinero_actual_cajero[4])+int(adicion[4]))
+  #Calcula la nueva cantidad de billetes de 50 peso
   billete_50= str(int(dinero_actual_cajero[5])+int(adicion[5]))
+  #Calcula la nueva cantidad de billetes de 100 peso
   billete_100= str(int(dinero_actual_cajero[6])+int(adicion[6]))
+  #Hilera que contiene la nueva cantidad de billetes por denominación
   dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+  #Actualiza la cantidad de billetes del cajero en el diccionario
   diccionario_cajero[cajero]= dinero_actualizado_cajero
   return print("Actualizacion exitosa, el cajero cuenta con "+ str(convertir_string_a_dinero(diccionario_cajero[cajero]))+ " pesos") 
 
 
-	#Función que se encarga de registrar los depósitos de dinero del usuario
+#Función que se encarga de registrar los depósitos de dinero del usuario
 def depositar_dinero(usuario, cajero):
 	"""
   Cada uno de las siguentes variables reciben la cantidad de billetes por cada denominación respectivamente que el usuario desea ingresar
@@ -525,14 +577,24 @@ def depositar_dinero(usuario, cajero):
 	billete_5= input("Digite la cantidad de billetes de 5 pesos que desea introducir:")
 	billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
 	billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
+	
+	#Si los valores digitados por el usuario son números
 	if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
+		#Pone los billetes en el formato necesario para guardar en el diccionario del cajero
 		deposito = billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+		#Se actualiza la cantidad de billetes en el cajero
 		actualizar_cajero_metiendo(cajero, deposito)
+		#Se actualiza el saldo de la cuenta del usuario
 		diccionario_saldo[usuario]= str(int(diccionario_saldo[usuario])+ convertir_string_a_dinero(deposito))
+		#Calcula el monto de dinero que ingresa al cajero
 		deposito_int= convertir_string_a_dinero(deposito)
+		#Se notifica al usuario que se pudo realizar el depósito
 		print("Se agregaron exitosamente "+str(deposito_int)+" pesos a su cuenta, ahora posee un total de "+ str(diccionario_saldo[usuario]) + " pesos")
+		#Variable que contiene la fecha y hora
 		tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split(" ")
+		#Variable que contiene la la fecha
 		fecha= tiempo[0]
+		#Variable que contiene la hora
 		hora= tiempo[1]
 		#Se actualiza el historial
 		diccionario_historial[usuario]+= "Se realizó un depósito de "+str(deposito_int)+ " pesos el " + str(fecha) + " a las " + str(hora) + " en el cajero " + str(cajero) + "\n"
@@ -543,7 +605,9 @@ def depositar_dinero(usuario, cajero):
 		#Si desea continuar
 		else:
 			return volver_al_menu(usuario)
+	#Si los valores ingresados por el usuario	
 	else:
+		#Variable que da la opción de volver al menú
 		continuar= input("Los dígitos introducidos no representan una cantidad de billetes válida, oprima 1 si desea volver a hacer un depósito o cualquier otra tecla para volver al menú principal \n")
 		#Si se desea volver a hacer un depósito
 		if continuar == "1":
