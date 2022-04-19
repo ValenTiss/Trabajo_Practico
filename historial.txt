@@ -1,1 +1,1 @@
-valen1234$: Esta cuenta es predeterminada\n, Fede1234#: Esta cuenta es predeterminada\n
+valen1234$:Esta cuenta es predeterminada\nSe realizó un depósito de 344 pesos el 18-04-2022 a las 18 horas 09 minutos en el cajero RAM12345\nSe realizó un depósito de 344 pesos el 18-04-2022 a las 18 en el cajero ABC12345\n Se realizó un retiro de   2040 pesos el 18-04-2022 a las 19 en el cajero ABC12345\nSe realizó un depósito de 344 pesos el 18-04-2022 a las 19 en el cajero ABC12345\n,      Fede1234#:Esta cuenta es predeterminada\n
