@@ -5,6 +5,8 @@ Fecha de entrega: 19 / 04 /22
 """
 import sys
 import time
+import random
+
 diccionario_historial = {}
 diccionario_clave = {}
 diccionario_saldo = {}
@@ -15,7 +17,7 @@ cajero = "cajero.txt"
 saldo = "saldo.txt"
 
 #La funcion Usuario se utiliza para determinar si los caracteres son letras en minuscula o mayuscula.
-def Usuario(entrada,x): #??? no deberíamos cambiar el parámetro x por algo más significatico?
+def Usuario(entrada,x):
 	entrada_len = len(entrada)
 	#Se crea una variable para hacer que la funcion sea recursiva.
 	if(x < entrada_len):
@@ -103,21 +105,20 @@ def Es_pin(entrada_usuario, contador):
 
 #Permite el acceso de la cuenta al menú de opciones
 def Acceso_cuenta(usuario,password): 
-	cuentas = CrearCuenta("Usuario")
 	
 	#Si el nombre de usuario coincide con algún nombre creado anteriormente
-	if usuario in cuentas:
+	if usuario in diccionario_clave:
 		
 		#Si la clave es correcta para el usuario seleccionado
-		if cuentas[usuario]==password:
+		if diccionario_clave[usuario]== int(password):
 				print("Datos ingresados correctamente.")
-				Inicio()
+				volver_al_menu(usuario)
 				
 		#La clave no coincide con la clave del usuario		
 		else:
 			#Permite al usuario elegir si desea volver a probar con otra clave o terminar terminar el programa
 			terminar= input("Presione 1 para volver a introducir su contraseña o cualquier otra tecla para terminar \n")
-			
+
 			#Si terminar no es un string vacío
 			if terminar!="":
 				#Si el usuario selecciona 1
@@ -128,8 +129,7 @@ def Acceso_cuenta(usuario,password):
 	
 			#terminar es un string vacío
 			else:
-				a=0 #???
-				#terminar()???
+				Finalizar
 				
 				
 	#El nombre de usuario introducido no existe
@@ -142,21 +142,12 @@ def Acceso_cuenta(usuario,password):
 			
 			#Se vuelve a pedir el nombre de usuario y clave
 			Solicitar_cuenta()
-  
-#Pide el nombre de usuario y contraseña al cliente
-def Solicitar_cuenta(): 
-	
-	#Variable que guarda el nombre de usuario introducido por el usuario para acceder a su cuenta
-	usuario = input("Digite su nombre de usuario: ")
-	
-	#Verifica que el nombre de usuario cumpla la expresión regular y sea un usuario existente
-	Usuario(usuario,0)
 
 #Inicio del programa, verifica si se desea ingresar al sistema como banquero o como cliente
 def Inicio():  
 
   #Guarda la opción para saber si el usuario desea ingresar como banquero o como usuario
-  banquero_o_usuario = input("Bienvenido al Banco ####. \n Si desea ingresar como banquero presione 1 , si desea ingresar como cliente presione 2 " ) #Tenemos que elegir el nombre del Banco ------------ ???
+  banquero_o_usuario = input("Bienvenido al Banco ValFe. \n Si desea ingresar como banquero presione 1 , si desea ingresar como cliente presione 2 " ) #Tenemos que elegir el nombre del Banco ------------ ???
 
   #Si el usuario escribió algo
   if banquero_o_usuario == "1":
@@ -169,28 +160,24 @@ def Inicio():
 
 	    #Si la clave del banquero es correcta
 	    if clave_banquero == "SAUL":
-	    	a = 0 #???
 	      #Despliega las opciones del banquero	
-	      #Consola_banquero()	
+	      Consola_banquero()	
 
 	    #La clave del banquero se introdujo de manera incorrecta	
 	    else:
 
 	      #Se notifica el error		
 	      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
-
-	  #Si el usuario ingresa el número 1 por lo que desea ingresar como cliente del banco 
-	  elif ord(banquero_o_usuario) == 50:
-
-	    #Se le solicitan los datos al usuario 		
-	    Solicitar_cuenta()
 		
 	  else:
-	    a=0 #???
-	    #terminar()
+	    Finalizar
+  elif banquero_o_usuario == "2":
+  	Solicitar_cuenta()
+
   else:
-  	a=0 #???
-		#terminar()
+  	Finalizar
+  	
+
 
 #Función que se encarga de pedir el nombre de usuario y llamar a la función Usuario(nmb_usr,0) para verificar su existencia
 def Solicitar_cuenta():
@@ -222,7 +209,7 @@ def Es_numero(entrada_usuario, contador):
 	
 	
 def volver_al_menu(usuario):
-	decision=input("Si desea hacer un nuevo retiro presione 0, realizar un depósito presione 1, revisar su saldo presione 2 o ver su historial de transacciones presione 3: ")
+	decision=input("Si desea hacer un retiro presione 0, realizar un depósito presione 1, revisar su saldo presione 2 o ver su historial de transacciones presione 3: ")
 	if decision =="0":
 		return Menu(decision,usuario)
 	elif decision =="1":
@@ -311,13 +298,11 @@ def Menu(decision,usuario_adm):
 
 
 		else:
-			a=0 #???
-			#terminar() ???
+			Finalizar
 
 	#El parámtero desicion es un string vacío
 	else: 
-		a=0 #???
-		#terminar() ???
+		Finalizar 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 """
@@ -336,9 +321,9 @@ def retirar_dinero(monto, usuario, cajero,dinero_en_cajero):
     else: 
       print("Dinero no disponible en este cajero, por favor desplácese a otro cajero o vuelva en unos días cuando se llenen las reservas")
   else:
-    print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco #### pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana") #???
+    print("Fondos insuficientes para realizar esta transacción. Para darle el mejor servicio el Banco ValFe pone a su dispocisión el servicio CRÉDITO EN LA PALMA DE SU MANO, para saber más acerca de este servicio pregunte en la sucursal más cercana") 
 
-#Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el formato "1,2,5,10,20,50,100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantidad de billetes
+#Convierte los string que contienen la cantidad de billetes de cada denominación a un entero donde cada denominación está en el formato "1.2.5.10.20.50.100" donde en este caso cada número representa el valor del billete, sin embargo, en cada casilla se escribe la cantidad de billetes
 def convertir_string_a_dinero(string):
   lista_billetes= string.split(".") #Lista que contiene la cantidad de billetes por denominación
   return int(lista_billetes[0]) + int(lista_billetes[1])*2 + int(lista_billetes[2])*5 + int(lista_billetes[3])*10 + int(lista_billetes[4])*20 + int(lista_billetes[5])*50 + int(lista_billetes[6])*100
@@ -365,7 +350,7 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 		nuevo_saldo= int(diccionario_saldo[usuario]) - disminucion_cajero_int
 		diccionario_saldo[usuario]= str(nuevo_saldo)
 		print("Transacción realizada con éxito, el saldo en su cuenta ahora es de "+ diccionario_saldo[usuario] +" pesos")
-		tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split()
+		tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split()
 		fecha= tiempo[0]
 		hora= tiempo[1]
 		#Se actualiza el historial
@@ -374,7 +359,7 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
-			return a==0# ???     terminar()
+			return Finalizar
 		#Si desea continuar
 		else:
 			return volver_al_menu(usuario)
@@ -394,9 +379,9 @@ def actualizar_cajero_sacando(cajero, disminucion):
   billete_20= str(int(dinero_actual_cajero[4])-int(disminucion[4]))
   billete_50= str(int(dinero_actual_cajero[5])-int(disminucion[5]))
   billete_100= str(int(dinero_actual_cajero[6])-int(disminucion[6]))
-  dinero_actualizado_cajero= billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
-  diccionario_cajero[cajero]= dinero_actualizado_cajero
-  return print("Se ha actualizado exitosamente la cantidad de dinero en el cajero, actualmente se posee: "+diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
+  dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+  diccionario_cajero[cajero]= dinero_actualizado_cajero 
+  return print("Se ha actualizado exitosamente la cantidad de dinero en el cajero, actualmente se posee: "+str(convertir_string_a_dinero(diccionario_cajero[cajero]))+ " pesos") 
 
 #calcula la cantidad de billetes de 100 que se deben y pueden devolver
 def devolver_billete_100(monto, dinero_en_cajero):
@@ -517,8 +502,7 @@ def actualizar_cajero_metiendo(cajero, adicion):
   billete_100= str(int(dinero_actual_cajero[6])+int(adicion[6]))
   dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
   diccionario_cajero[cajero]= dinero_actualizado_cajero
-  return print("Actualizacion exitosa, el cajero cuenta con "+ diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
-
+  return print("Actualizacion exitosa, el cajero cuenta con "+ str(convertir_string_a_dinero(diccionario_cajero[cajero]))+ " pesos") 
 
 
 	#Función que se encarga de registrar los depósitos de dinero del usuario
@@ -539,7 +523,7 @@ def depositar_dinero(usuario, cajero):
 		diccionario_saldo[usuario]= str(int(diccionario_saldo[usuario])+ convertir_string_a_dinero(deposito))
 		deposito_int= convertir_string_a_dinero(deposito)
 		print("Se agregaron exitosamente "+str(deposito_int)+" pesos a su cuenta, ahora posee un total de "+ str(diccionario_saldo[usuario]) + " pesos")
-		tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split(" ")
+		tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split(" ")
 		fecha= tiempo[0]
 		hora= tiempo[1]
 		#Se actualiza el historial
@@ -547,7 +531,7 @@ def depositar_dinero(usuario, cajero):
 		
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
-			return a==0# ???     terminar()
+			Finalizar
 		#Si desea continuar
 		else:
 			return volver_al_menu(usuario)
@@ -559,6 +543,44 @@ def depositar_dinero(usuario, cajero):
 		#Se desea volver al menu del usuario
 		else:
 			return volver_al_menu(usuario)
+
+def depositar_dinero_banquero(usuario, cajero):
+	"""
+  Cada uno de las siguentes variables reciben la cantidad de billetes por cada denominación respectivamente que el usuario desea ingresar
+	"""
+	billete_100= input("Digite la cantidad de billetes de 100 pesos que desea introducir:")
+	billete_50= input("Digite la cantidad de billetes de 50 pesos que desea introducir:")
+	billete_20= input("Digite la cantidad de billetes de 20 pesos que desea introducir:")
+	billete_10= input("Digite la cantidad de billetes de 10 pesos que desea introducir:")
+	billete_5= input("Digite la cantidad de billetes de 5 pesos que desea introducir:")
+	billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
+	billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
+	if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
+		deposito = billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+		actualizar_cajero_metiendo(cajero, deposito)
+		diccionario_saldo[usuario]= str(int(diccionario_saldo[usuario])+ convertir_string_a_dinero(deposito))
+		deposito_int= convertir_string_a_dinero(deposito)
+		print("Se agregaron exitosamente "+str(deposito_int)+" pesos a su cuenta, ahora posee un total de "+ str(diccionario_saldo[usuario]) + " pesos")
+		tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split(" ")
+		fecha= tiempo[0]
+		hora= tiempo[1]
+		#Se actualiza el historial
+		diccionario_historial[usuario]+= "Se realizó un depósito de "+str(deposito_int)+ " pesos el " + str(fecha) + " a las " + str(hora) + " en el cajero " + str(cajero) + "\n"
+		
+		#Si desea cerrar el programa
+		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
+			Finalizar
+		#Si desea continuar
+		else:
+			return Consola_banquero()
+	else:
+		continuar= input("Los dígitos introducidos no representan una cantidad de billetes válida, oprima 1 si desea volver a hacer un depósito o cualquier otra tecla para volver al menú principal \n")
+		#Si se desea volver a hacer un depósito
+		if continuar == "1":
+			return depositar_dinero_banquero(usuario, cajero) 
+		#Se desea volver al menu del usuario
+		else:
+			return Consola_banquero()
 
 def Nmb_Cajero(Cajero,contador):
   Cajero_len = len(Cajero)
@@ -701,15 +723,9 @@ def Consola_banquero():
         return rellenar_cajero(cajero)
     
     else:
-      a=0 #???
-      #terminar()
-  else:
-    a=0 #??? 
-    #terminar()
-
-
-
-
+    	Finalizar
+  else: 
+  	Finalizar
 
 
 def crear_usuario():
@@ -722,12 +738,13 @@ def crear_usuario():
     if not(posible_usuario in diccionario_historial):
       
       #Se rellenan los diccionarios
-      tiempo= time.strftime('%d-%m-%Y %H:%M', time.localtime()).split(" ")
+      tiempo= time.strftime('%d-%m-%Y %H horas %M minutos', time.localtime()).split(" ")
       fecha= tiempo[0]
       hora= tiempo[1]
       diccionario_historial[posible_usuario]= "Esta cuenta se creó el "+  fecha + " a las "+ hora + "\n"
 
       diccionario_clave[posible_usuario]= random.randint(1000, 9999)
+      print("La contraseña de esta cuenta va a ser: " +str(diccionario_clave[posible_usuario]))
       
       diccionario_saldo[posible_usuario]= "0"
       print("La cuenta posee un saldo de 0 pesos")
@@ -735,8 +752,12 @@ def crear_usuario():
       
       #Si se desea realizar un depósito a la cuenta
       if depositar=="1":
-        return Menu(depositar, posible_usuario)
-      
+        cajero = input("Ingrese el cajero al que va a realizar la transferencia: ")
+        if cajero in diccionario_cajero:
+        	return depositar_dinero_banquero(posible_usuario,cajero)
+       	else:
+        	print("Nombre de cajero incorrecto. Volvera al menu del banquero")
+        	Consola_banquero()
       #Si se desea que la cuenta quede sin dinero
       else:
         print("Se regresará al menú del banquero")
@@ -748,11 +769,7 @@ def crear_usuario():
   #posible_usuario no cumple con la expresión regular
   else:
     print("Nombre de usuario no válido para su creación debido a que no cumple la expresión regular")
-
-
-
-
-
+    crear_usuario()
 
 
 #Crea un nuevo cajero si el nombre de cajero cumple con la expresión regular 
@@ -767,7 +784,7 @@ def crear_cajero():
     if not(posible_cajero in diccionario_cajero):
       
       #Se rellena el diccionarios
-      diccionario_cajero[posible_cajero]= "0,0,0,0,0,0,0"
+      diccionario_cajero[posible_cajero]= "0.0.0.0.0.0.0"
       print("El cajero "+ posible_cajero+ " está vacío, se procede a rellenarlo")
       return rellenar_cajero(posible_cajero)
 
@@ -778,6 +795,7 @@ def crear_cajero():
   #posible_cajero no cumple con la expresión regular
   else:
     print("Nombre de cajero no válido para su creación")
+    crear_cajero()
     
 
 
@@ -869,14 +887,12 @@ def rellenar_cajero(cajero):
   billete_2= input("Digite la cantidad de billetes de 2 pesos que desea introducir:")
   billete_1= input("Digite la cantidad de billetes de 1 pesos que desea introducir:")
   if Es_numero(billete_1,0) and Es_numero(billete_2,0) and Es_numero(billete_5,0) and Es_numero(billete_10,0) and Es_numero(billete_20,0) and Es_numero(billete_20,0) and Es_numero(billete_100,0): 
-    deposito = billete_1+","+billete_2+","+billete_5+","+billete_10+","+billete_20+","+billete_50+","+billete_100
+    deposito = billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
     actualizar_cajero_metiendo(cajero, deposito)
     deposito_int= convertir_string_a_dinero(deposito)
     print("Se agregó exitosamente "+str(deposito_int)+" pesos al cajero.")
     print("Se procede a volver al menú del banquero")
     return Consola_banquero()
 
-
-
-Solicitar_cuenta()
+Inicio()
 Finalizar()
