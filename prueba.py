@@ -1,97 +1,20 @@
-diccionario_historial = {}
-diccionario_clave = {}
-diccionario_saldo = {}
-diccionario_cajero = {}
-clave = "usuarios.txt"
-historial = "historial.txt"
-cajero = "cajero.txt"
-saldo = "saldo.txt"
-def CrearCuenta(opcion):
-	if opcion == "Usuario":
-		cuentasArchivo = open(clave)
-		cuenta = cuentasArchivo.readlines()
-		diccionario_us = Splitter(cuenta,0,diccionario_clave) 
-		diccionario_u = EntValue(diccionario_us)
-		return diccionario_u
 
-	elif opcion == "Saldo":
-		cuentasArchivo = open(saldo)
-		cuenta = cuentasArchivo.readlines()
-		diccionario_us = Splitter(cuenta,0,diccionario_saldo)
-		diccionario_u = EntValue(diccionario_us)
-		return diccionario_u
+diccionario_cajero = {"ABC12345":"1.2.5.10.20.50.100"}
 
-	elif opcion == "Cajero":
-		cuentasArchivo = open(cajero)
-		cuenta = cuentasArchivo.readlines()
-		diccionario_ca = Splitter(cuenta,0,diccionario_cajero)
-		return diccionario_ca
+def actualizar_cajero_metiendo(cajero, adicion):
+  dinero_actual_cajero=diccionario_cajero[cajero].split(".")
+  adicion= adicion.split(".")
+  print(dinero_actual_cajero)
+  billete_1= str(int(dinero_actual_cajero[0])+int(adicion[0]))
+  billete_2= str(int(dinero_actual_cajero[1])+int(adicion[1]))
+  billete_5= str(int(dinero_actual_cajero[2])+int(adicion[2]))
+  billete_10= str(int(dinero_actual_cajero[3])+int(adicion[3]))
+  billete_20= str(int(dinero_actual_cajero[4])+int(adicion[4]))
+  billete_50= str(int(dinero_actual_cajero[5])+int(adicion[5]))
+  billete_100= str(int(dinero_actual_cajero[6])+int(adicion[6]))
+  dinero_actualizado_cajero= billete_1+"."+billete_2+"."+billete_5+"."+billete_10+"."+billete_20+"."+billete_50+"."+billete_100
+  diccionario_cajero[cajero]= dinero_actualizado_cajero
+  return print("Actualizacion exitosa, el cajero cuenta con "+ diccionario_cajero[cajero]) #??? se puede borrar o escribir mejor
 
-	elif opcion == "Historial":
-		cuentasArchivo = open(historial)
-		cuenta = cuentasArchivo.readlines()
-		diccionario_h = Splitter(cuenta,0,diccionario_historial)
-		return diccionario_h
+actualizar_cajero_metiendo("ABC12345","1.2.43.5.7.6.4")
 
-def Splitter(cuenta,x,diccionario):
-	cuentaComa = cuenta[0].split(",")
-	if len(cuentaComa)> x:
-		try:
-			cuentaRec =cuentaComa[x].split()
-			key,value = cuentaRec
-			keyRec = key
-			valueRec = value
-			diccionario[keyRec] = valueRec
-			x+=1
-			Splitter(cuenta,x,diccionario)
-		except ValueError:
-			cuentaRec =cuentaComa[x].split(":")
-			key,value = cuentaRec
-			keyRec = key
-			valueRec = value
-			diccionario[keyRec] = valueRec
-			diccionario[keyRec]= valueRec.replace("\\n","\n")
-			x+=1
-
-			Splitter(cuenta,x,diccionario)
-	else:
-		return diccionario
-
-	return diccionario
-
-def EntValue(diccionario):
-	diccionario = dict((k, int(v)) for k, v in diccionario.items())
-	return diccionario
-
-def Actualizar(filepath,diccionario):
-	string = str(diccionario)
-	if filepath == historial:
-		string = string.replace("'","")
-		string = string.replace(":  ",":")
-		len_string = len(string)
-		abrirDocumento = open(filepath,"w")
-		abrirDocumento.write(string[1:len_string-1])
-		abrirDocumento.close()
-
-
-	else:
-		string = string.replace("'","")
-		string = string.replace(":","")
-		len_string = len(string)
-		abrirDocumento = open(filepath,"w")
-		abrirDocumento.write(string[1:len_string-1])
-		abrirDocumento.close()
-
-def Finalizar():
-	Act_clave =Actualizar(clave,diccionario_clave)
-	Act_saldo = Actualizar(saldo,diccionario_saldo)
-	Act_cajero = Actualizar(cajero,diccionario_cajero)
-	Act_historial = Actualizar(historial,diccionario_historial)
-	
-
-diccionario_clave = CrearCuenta("Usuario")
-diccionario_saldo = CrearCuenta("Saldo")
-diccionario_cajero = CrearCuenta("Cajero")
-diccionario_historial = CrearCuenta("Historial")
-
-Finalizar()
