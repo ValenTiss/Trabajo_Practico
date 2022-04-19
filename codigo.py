@@ -129,7 +129,7 @@ def Acceso_cuenta(usuario,password):
 	
 			#terminar es un string vacío
 			else:
-				Finalizar
+				Finalizar()
 				
 				
 	#El nombre de usuario introducido no existe
@@ -170,12 +170,12 @@ def Inicio():
 	      print("Intento sospechoso de entrar al sistema, se ha notificado a las autoridades correspondientes.")
 		
 	  else:
-	    Finalizar
+	    Finalizar()
   elif banquero_o_usuario == "2":
   	Solicitar_cuenta()
 
   else:
-  	Finalizar
+  	Finalizar()
   	
 
 
@@ -298,11 +298,11 @@ def Menu(decision,usuario_adm):
 
 
 		else:
-			Finalizar
+			Finalizar()
 
 	#El parámtero desicion es un string vacío
 	else: 
-		Finalizar 
+		Finalizar() 
 
 #--------------------------------------------------------------------------------------------------------------------------------------------------------
 """
@@ -359,7 +359,7 @@ def retirar_dinero_del_cajero(monto, usuario, cajero,dinero_en_cajero):
 
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
-			return Finalizar
+			return Finalizar()
 		#Si desea continuar
 		else:
 			return volver_al_menu(usuario)
@@ -531,7 +531,7 @@ def depositar_dinero(usuario, cajero):
 		
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
-			Finalizar
+			Finalizar()
 		#Si desea continuar
 		else:
 			return volver_al_menu(usuario)
@@ -569,7 +569,7 @@ def depositar_dinero_banquero(usuario, cajero):
 		
 		#Si desea cerrar el programa
 		if input("Presione 0 si desea terminar el programa y cualquier otra letra para continuar ")=="0":
-			Finalizar
+			Finalizar()
 		#Si desea continuar
 		else:
 			return Consola_banquero()
@@ -723,9 +723,9 @@ def Consola_banquero():
         return rellenar_cajero(cajero)
     
     else:
-    	Finalizar
+    	Finalizar()
   else: 
-  	Finalizar
+  	Finalizar()
 
 
 def crear_usuario():
