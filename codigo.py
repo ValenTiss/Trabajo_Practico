@@ -190,34 +190,42 @@ def Solicitar_cuenta():
 	
 #Verifica que un string contenga unicamente a un número entero
 def Es_numero(entrada_usuario, contador): 
-	"""
-	Entradas: entrada_usuario (string), contador (0)
-  Salidas: True o False
-	"""
+	
 	entrada_usuario = str(entrada_usuario)
-	if len(str(entrada_usuario)) != 0: 
+	#Si la entrada del usuario no es vacia
+	if len(str(entrada_usuario)) != 0:
+		
+		#Si no se ha recorrido toda la hilera
 		if contador < len(str(entrada_usuario)):
+			
+			#Si el caracter es un numero
 			if 48 <= ord(entrada_usuario[contador]) <= 57 :
 				contador+=1
 				return Es_numero(entrada_usuario, contador)
+			#El caracter no corresponde a un numero
 			else:
 				return False
+		#Se recorrio toda la hilera sin inconvenientes	
 		else:
 			return True
+		
+	#El usuario no ingresó ningún valor	
 	return False
 
 	
-	
+#Función que es llamada por otras funciones para regresar al menu del usuario.
 def volver_al_menu(usuario):
+	
+	#Opción escogida por el usuario 
 	decision=input("Si desea hacer un retiro presione 0, realizar un depósito presione 1, revisar su saldo presione 2 o ver su historial de transacciones presione 3: ")
-	if decision =="0":
+	
+	#Si se elige alguna de las opciones posibles
+	if decision =="0" or decision =="1" or decision =="2" or decision =="3":
 		return Menu(decision,usuario)
-	elif decision =="1":
-		return Menu(decision,usuario)
-	elif decision =="2":
-		return Menu(decision,usuario)
-	elif decision =="3":
-		return Menu(decision,usuario)
+	
+	#No se eligió ninguna de las opciones para el usuario
+	else:
+		return Finalizar()
 
 
 
@@ -304,7 +312,7 @@ def Menu(decision,usuario_adm):
 	else: 
 		Finalizar() 
 
-#--------------------------------------------------------------------------------------------------------------------------------------------------------
+#Inicio de retiro y depósito --------------------------------------------------------------------------------------------------------------------------------------------------------
 """
 Función que se encarga de verificar que el monto en la cuenta del usuario tenga el monto que desea retirar y llama a otras funciones para encargarse del proceso de retirar dinero de la cuenta del usuario y descontar los billetes de los cajeros
 """
@@ -609,6 +617,8 @@ def Num_Cajero(Cajero,NmbCajero,x):
 	else:
 		print('Creacion de cajero exitosa')
 
+#Inicio de lectura y guardado de .txt-----------------------------------------------------------------------------------------------------------------------------------------
+
 def CrearCuenta(opcion):
 	if opcion == "Usuario":
 		cuentasArchivo = open(clave)
@@ -697,7 +707,8 @@ diccionario_saldo = CrearCuenta("Saldo")
 diccionario_cajero = CrearCuenta("Cajero")
 diccionario_historial = CrearCuenta("Historial")
 
-#------------
+#Inicio de funcionalidades para el banquero--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 #Esta función despliega las opciones del banquero para poder crear nuevos usuarios y cajeros, además, rellenar los cajeros
 def Consola_banquero():	
   desicion= input("Bienvenido banquero \n presione 1 si desea crear un nuevo usuario, 2 si desea crear un nuevo cajero, 3 si desea rellenar de billetes algún cajero: ")
